@@ -5,6 +5,7 @@
 export default function nBitAddition(a, b) {
 	if (a.length !== b.length) throw Error("Arrays a and b are not the same length");
 	let n = a.length;
+	const c = [];
 
 	// set carry = 0
 	let carry = 0;
@@ -12,17 +13,19 @@ export default function nBitAddition(a, b) {
 	// when iterating, start at end of arrays A, B, and C
 		// index of C will be index of (A, B) + 1
 	for (let i = 0; i < n; i++) {
-		let index = n - i;
+		let index = n - 1 - i;
 		let cIndex = index + 1;
 
 		// since this is bitwise addition, sum of A[i] + B[i] can be 0, 1, 2, or 3
 		let sum = a[index] + b[index] + carry;
 
 		// if sum is 2 or greater, then set carry = 1; else carry = 0;
-		if (sum >= 2) 
+		if (sum >= 2) {
 			carry = 1; 
-		else 
-			carry = 0;
+		}
+		else {
+			carry = 0;			
+		} 
 
 		// set C[i+1] to sum % 2, as we only want a 1 or 0
 		sum = sum % 2;
