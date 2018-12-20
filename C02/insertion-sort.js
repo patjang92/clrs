@@ -1,6 +1,3 @@
-var assert = require('assert')
-
-
 function insertionSort(a) {
 	// Instantiate for loop to iterate through elements of array
 	// Set i (index of array) to start with second element
@@ -12,15 +9,17 @@ function insertionSort(a) {
 		let j = i-1;
 	
 		// While j is greater than -1
-		while (j > -1 && a[j] > a[i]) {
+		while (j > -1 && a[j] > key) {
 			// If a[j] is greater than key, set a[j+1] = a[j] and set j--
 			a[j+1] = a[j];
 			j--;
 		}
-		// Else a[j] = key and break
-		a[j] = key;
+		// Else a[j+1] = key and break
+		a[j+1] = key;
 	}
+	return a;
 }
 
-// Tests
-assert([1,2,3] == insertionSort([1,2,3]));
+// // Tests
+// assert([1,2,3] == insertionSort([1,2,3]));
+module.exports = insertionSort;
