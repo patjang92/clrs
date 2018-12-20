@@ -1,7 +1,7 @@
 // TODO: should have custom comparator
 // TODO: make a sorting class
 
-function insertionSort(a) {
+export default function insertionSort(a) {
 	// Instantiate for loop to iterate through elements of array
 	// Set i (index of array) to start with second element
 	for (let i = 1; i < a.length; i++) {
@@ -25,4 +25,4 @@ function insertionSort(a) {
 
 // // Tests
 // assert([1,2,3] == insertionSort([1,2,3]));
-module.exports = insertionSort;
+// module.exports = insertionSort;

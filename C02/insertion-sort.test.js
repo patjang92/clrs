@@ -1,6 +1,6 @@
 // TODO: make test suite
-
-const insertionSort = require('./insertion-sort');
+import insertionSort from './insertion-sort';
+// const insertionSort = require('./insertion-sort');
 
 test('sorts input [1, 2, 3] to output [1, 2, 3]', () => {
 	expect(insertionSort([1, 2, 3])).toEqual([1, 2, 3]);
