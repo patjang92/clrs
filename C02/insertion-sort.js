@@ -1,3 +1,6 @@
+// TODO: should have custom comparator
+// TODO: make a sorting class
+
 function insertionSort(a) {
 	// Instantiate for loop to iterate through elements of array
 	// Set i (index of array) to start with second element
