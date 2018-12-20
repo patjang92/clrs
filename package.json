@@ -1,0 +1,22 @@
+{
+  "name": "clrs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/patjang92/clrs.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/patjang92/clrs/issues"
+  },
+  "homepage": "https://github.com/patjang92/clrs#readme",
+  "devDependencies": {
+    "jest": "^23.6.0"
+  }
+}
