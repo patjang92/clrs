@@ -22,7 +22,3 @@ export default function insertionSort(a) {
 	}
 	return a;
 }
-
-// // Tests
-// assert([1,2,3] == insertionSort([1,2,3]));
-// module.exports = insertionSort;
