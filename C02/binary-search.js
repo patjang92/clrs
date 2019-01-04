@@ -1,3 +1,5 @@
+// recursive vs iterative?
+
 export default function binarySearch(A, v, start, end) {
 	if (end - start < 0) return null;
 	const mid = start + Math.floor((end - start) / 2);
