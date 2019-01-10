@@ -18,10 +18,7 @@ function maxHeapify(A, rootIndex, heapSize = A.length){
 	}
 
 	if (largestIndex != rootIndex) {
-		const tmp = A[rootIndex];
-		A[rootIndex] = A[largestIndex];
-		A[largestIndex] = tmp;
-
+    swap(A, rootIndex, largestIndex)
 		maxHeapify(A, largestIndex, heapSize);
 	}
 }
@@ -35,10 +32,13 @@ function buildMaxHeap(A) {
 
 function sortMaxHeap(A) {
 	for (let i = A.length - 1; i >= 1; i--) {
-		const tmp = A[i];
-		A[i] = A[0];
-		A[0] = tmp;
-
+    swap(A, i, 0);
 		maxHeapify(A, 0, i);
 	}
+}
+
+function swap(A, i, j) {
+  const tmp = A[i];
+  A[i] = A[j];
+  A[j] = tmp;
 }
