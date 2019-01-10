@@ -19,7 +19,7 @@ export default class Stack {
    * @returns {boolean} true if stack is empty
    */
   isEmpty() {
-    return this.stackArray.length == 0;
+    return this.stackArray.length === 0;
   }
 
   /**
