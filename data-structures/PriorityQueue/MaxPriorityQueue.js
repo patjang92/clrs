@@ -1,4 +1,4 @@
-import MaxHeap from './MaxHeap';
+import MaxHeap from '../Heap/MaxHeap';
 
 export default class MaxPriorityQueue extends MaxHeap {
 	

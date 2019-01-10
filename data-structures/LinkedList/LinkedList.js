@@ -1,4 +1,4 @@
-import LinkedListNode from './LinkedListNode';
+import DoublyLinkedListNode from './DoublyLinkedListNode';
 
 /**
  * Implements Doubly Linked List class using Linked List nodes 
