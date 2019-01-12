@@ -1,4 +1,7 @@
 import DoublyLinkedListNode from './DoublyLinkedListNode';
+/**
+ * @todo: must reimplement
+ */
 
 /**
  * Implements Doubly Linked List class using Linked List nodes 
@@ -8,13 +11,10 @@ export default class DoublyLinkedList {
   /**
    * Creates Linked List object with head node as argument
    * 
-   * @param {LinkedListNode} head Node that will be the head of the Linked List 
    */
-  constructor(head) {
-    this.head = head;
-    this.head.next = null;
-    this.head.prev = null;
-    this.tail = head;
+  constructor() {
+    this.head = null;
+    this.tail = null;
   }
 
   /**
@@ -24,10 +24,19 @@ export default class DoublyLinkedList {
    * @param {LinkedListNode} node new node to be inserted in the beginning of the list
    */
   insertNode(node) {
-    node.next = this.head;
-    this.head.prev = node;
-    this.head = node;
-    this.head.prev = null;
+    if (!node) return;
+
+    // case where list is empty
+    if (!this.head && !this.tail) {
+      this.head = node;
+      this.tail = node;
+      
+    } else {
+      // all other cases more than 1 element
+      this.head.prev = node;
+      node.next = this.head;
+      this.head = node;
+    }
   }
 
   /**
@@ -37,7 +46,7 @@ export default class DoublyLinkedList {
    * @param {*} value 
    */
   insert(value) {
-    const node = new LinkedListNode(value);
+    const node = new DoublyLinkedListNode(value);
     this.insertNode(node);
   }
 
@@ -48,10 +57,21 @@ export default class DoublyLinkedList {
    * @param {LinkedListNode} node new node to be appended at the end of the list
    */
   appendNode(node) {
-    node.prev = this.tail;
-    node.next = null;
-    this.tail.next = node;
-    this.tail = node;
+    if (!node) return;
+
+    // node.next = null;
+
+    // case where list is empty, head == tail == null
+    if (!this.head && !this.tail) {
+      this.head = node;
+      this.tail = node;
+    }
+    // case where list is 1 element or more
+    else {
+      node.prev = this.tail;
+      this.tail.next = node;
+      this.tail = node;
+    }
   }
 
   /**
@@ -61,7 +81,7 @@ export default class DoublyLinkedList {
    * @param {*} value 
    */
   append(value) {
-    const node = new LinkedListNode(value);
+    const node = new DoublyLinkedListNode(value);
     this.appendNode(node);
   }
 
@@ -72,21 +92,33 @@ export default class DoublyLinkedList {
    * @param {LinkedListNode} node node to be deleted from linked list 
    */
   deleteNode(node) {
-    if (this.head != node) {
-      x.prev.next = x.next;
-    } else {
-      this.head = x.next;
+    if (!node) return;
+
+    // case where node is head and tail (1 element)
+    if (this.head == this.tail && this.head == node) {
+      this.head = null;
+      this.tail = null;
     }
-    if (this.tail != node) {
-      x.next.prev = x.prev;
-    } else {
-      this.tail = x.prev;
+    // case where node is head
+    else if (this.head == node) {
+      this.head = this.head.next;
+      this.head.prev = null;
+    }
+    // case where node is tail
+    else if (this.tail == node) {
+      this.tail = this.tail.prev;
+      this.tail.next = null;
+    } 
+    // all other cases    
+    else {
+      node.prev.next = node.next;
+      node.next.prev = node.prev;
     }
   }
 
   /**
    * Deletes first node with matching value from linked list
-   * Runtime Complexity: O(1)
+   * Runtime Complexity: O(n)
    * 
    * @param {*} value value to delete from linked list
    */

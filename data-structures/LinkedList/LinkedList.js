@@ -1,4 +1,4 @@
-import DoublyLinkedListNode from './DoublyLinkedListNode';
+import LinkedListNode from './LinkedListNode';
 
 /**
  * Implements Doubly Linked List class using Linked List nodes 
@@ -8,13 +8,10 @@ export default class LinkedList {
   /**
    * Creates Linked List object with head node as argument
    * 
-   * @param {LinkedListNode} head Node that will be the head of the Linked List 
    */
-  constructor(head) {
-    this.head = head;
-    this.head.next = null;
-    this.head.prev = null;
-    this.tail = head;
+  constructor() {
+    this.head = null;
+    this.tail = null;
   }
 
   /**
@@ -24,10 +21,12 @@ export default class LinkedList {
    * @param {LinkedListNode} node new node to be inserted in the beginning of the list
    */
   insertNode(node) {
+    if (!node) return;
     node.next = this.head;
-    this.head.prev = node;
     this.head = node;
-    this.head.prev = null;
+    if (this.tail == null) {
+      this.tail = node;  
+    }
   }
 
   /**
@@ -48,9 +47,14 @@ export default class LinkedList {
    * @param {LinkedListNode} node new node to be appended at the end of the list
    */
   appendNode(node) {
-    node.prev = this.tail;
+    if (!node) return;
     node.next = null;
-    this.tail.next = node;
+    if (this.head == null) {
+      this.head = node;
+    }
+    if (this.tail != null) {
+      this.tail.next = node;
+    } 
     this.tail = node;
   }
 
@@ -67,20 +71,32 @@ export default class LinkedList {
 
   /**
    * Deletes node from Linked List
-   * Runtime Complexity: O(1)
+   * Runtime Complexity: O(n)
    * 
    * @param {LinkedListNode} node node to be deleted from linked list 
    */
   deleteNode(node) {
-    if (this.head != node) {
-      x.prev.next = x.next;
+    if (!node || !this.head || !this.tail) return;
+
+    let currentNode = this.head;
+
+    if (this.head == node) {
+      if (this.tail == this.head) {
+        this.head = null;
+        this.tail = null;
+      } else {
+        this.head = node.next;
+      }
     } else {
-      this.head = x.next;
-    }
-    if (this.tail != node) {
-      x.next.prev = x.prev;
-    } else {
-      this.tail = x.prev;
+
+      while (currentNode.next != node) {
+        currentNode = currentNode.next;
+      }
+      currentNode.next = currentNode.next.next;
+
+      if (this.tail == node) {
+        this.tail = currentNode;
+      }
     }
   }
 
