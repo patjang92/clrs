@@ -266,4 +266,41 @@ describe('LinkedList', () => {
     expect(list.tail.next).toBeNull();
   })
 
+  it('should search by value and return node or null if not found', () => {
+    const list = new DoublyLinkedList();
+    const node1 = new DoublyLinkedListNode(1);
+    const node2 = new DoublyLinkedListNode(2);
+    const node3 = new DoublyLinkedListNode(3);
+
+    list.insertNode(node3); // 3
+    list.insertNode(node2); // 2 - 3
+    list.insertNode(node1); // 1 - 2 - 3
+
+    let searchResult = list.search(2);
+    expect(searchResult).toEqual(node2);
+
+    searchResult = list.search(3);
+    expect(searchResult).toEqual(node3);
+
+    searchResult = list.search(1);
+    expect(searchResult).toEqual(node1);
+
+    searchResult = list.search(5);
+    expect(searchResult).toBeNull();
+  })
+
+  it('should delete node by value', () => {
+    const list = new DoublyLinkedList();
+    const node1 = new DoublyLinkedListNode(1);
+    const node2 = new DoublyLinkedListNode(2);
+    const node3 = new DoublyLinkedListNode(3);
+
+    list.delete(3); // 3
+    list.delete(2); // 2 - 3
+    list.delete(1); // 1 - 2 - 3
+
+    expect(list.head).toBeNull();
+    expect(list.tail).toBeNull();
+  })
+
 });
