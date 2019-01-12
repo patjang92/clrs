@@ -1,7 +1,7 @@
 import LinkedListNode from './LinkedListNode';
 
 /**
- * Implements Doubly Linked List class using Linked List nodes 
+ * Implements Singly Linked List class using Linked List nodes 
  */
 export default class LinkedList {
 
@@ -12,6 +12,10 @@ export default class LinkedList {
   constructor() {
     this.head = null;
     this.tail = null;
+  }
+
+  isEmpty() {
+    return (this.head == null);
   }
 
   /**

@@ -138,7 +138,6 @@ export default class DoublyLinkedList {
   search(value) {
     let currentNode = this.head;
     while (currentNode != null && currentNode.value !== value ) {
-      console.log("currentNode = ", currentNode);
       currentNode = currentNode.next;
     }
     return currentNode;

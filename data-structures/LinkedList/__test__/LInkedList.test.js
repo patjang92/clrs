@@ -9,6 +9,7 @@ describe('LinkedList', () => {
     const list = new LinkedList();
     expect(list.head).toBeNull();
     expect(list.tail).toBeNull();
+    expect(list.isEmpty()).toBe(true);
   })
 
   it('should not insert null node', () => {
