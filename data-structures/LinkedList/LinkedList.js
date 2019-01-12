@@ -84,23 +84,32 @@ export default class LinkedList {
 
     let currentNode = this.head;
 
-    if (this.head == node) {
-      if (this.tail == this.head) {
-        this.head = null;
-        this.tail = null;
-      } else {
-        this.head = node.next;
-      }
-    } else {
-
+    // Case 1: single element list (head == tail)
+    if (this.head == this.tail && node == this.head) {
+      this.head = null;
+      this.tail = null;
+    }
+    // Case 2: want to delete head
+    else if (this.head == node) {
+      this.head = this.head.next;
+    }
+    // Else we need to iterate to the node before the one we want to delete
+    else {
+      let currentNode = this.head;
       while (currentNode.next != node) {
         currentNode = currentNode.next;
       }
-      currentNode.next = currentNode.next.next;
 
+      // Case 3: want to delete tail
       if (this.tail == node) {
         this.tail = currentNode;
+        currentNode.next = null;
       }
+
+      // Case 4: want to delete middle element      
+      else {
+        currentNode.next = currentNode.next.next;
+      }      
     }
   }
 
