@@ -36,4 +36,12 @@ describe('Queue', () => {
     expect(queue.peek).toThrowError();
     expect(queue.dequeue).toThrowError();
   })
+
+  it('should show contents of queue as array', () => {
+    const queue = new Queue();
+    queue.enqueue(1);
+    queue.enqueue(2);
+    queue.enqueue(3);
+    expect(queue.toArray()).toEqual([1, 2, 3]);
+  })
 })

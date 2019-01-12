@@ -31,6 +31,11 @@ export default class Queue {
     const value = this.list.head.value;
     return value;
   }
+
+  toArray() {
+    return this.list.toArray();
+  }
+
 }
 
 
