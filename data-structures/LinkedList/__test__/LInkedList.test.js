@@ -164,4 +164,18 @@ describe('LinkedList', () => {
     expect(list.tail.value).toEqual(2);
     expect(list.tail.next).toBeNull();
   }) 
+
+  it('should return list elements in array', () => {
+    const list = new LinkedList();
+    expect(list.toArray()).toEqual([]);
+    list.append(1);
+    expect(list.toArray()).toEqual([1]);
+    list.append(2);
+    expect(list.toArray()).toEqual([1, 2]);
+    list.append(3);
+    expect(list.toArray()).toEqual([1, 2, 3]);
+    list.delete(3);
+    expect(list.toArray()).toEqual([1, 2]);
+  })
+
 });

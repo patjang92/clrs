@@ -115,14 +115,14 @@ export default class LinkedList {
 
   /**
    * Deletes first node with matching value from linked list
-   * Runtime Complexity: O(1)
+   * Runtime Complexity: O(n)
    * 
    * @param {*} value value to delete from linked list
    */
   delete(value) {
     let node = this.search(value);
     if (node) {
-      deleteNode(node);
+      this.deleteNode(node);
     }
   }
 
@@ -139,4 +139,21 @@ export default class LinkedList {
     }
     return currentNode;
   }
+
+  /**
+   * Return list in array form
+   * 
+   * @returns {*|array} list elements in order in array 
+   */
+  toArray() {
+    const array = [];
+    let currentNode = this.head;
+    while (currentNode) {
+      array.push(currentNode.value);
+      currentNode = currentNode.next;
+    }
+    return array;
+  }
+
+
 }
