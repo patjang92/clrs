@@ -1,5 +1,5 @@
 export default function QuickSort(A, start, end) {
-  if (end <= start) return A;
+  if (end <= start || start >= end)  return A;
   let mid = partition(A, start, end);
   QuickSort(A, start, mid-1);
   QuickSort(A, mid+1, end);
