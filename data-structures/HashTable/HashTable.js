@@ -1,5 +1,9 @@
 import DoublyLinkedList from '../LinkedList/DoublyLinkedList';
 
+
+/**
+ * @todo: need to augment linked list to accept callbacks for dynamic object types
+ */
 export default class HashTable {
 
   constructor(hash, numSlots) {
@@ -15,22 +19,13 @@ export default class HashTable {
     this.slots[hashValue].insert(value);
   }
 
-  insert(x) {
-    let hashValue = this.hash(x);
-    this.slots[hashValue].insert(x);
-    return hashValue;
+  get(key) {
+    let hashValue = this.hash(key);
+    return this.slots[hashValue].search(key);
   }
 
-  delete(x) {
-    let hashValue = this.hash(x);
-    return this.slots[this.hash(x)].delete(x);
+  delete(key) {
+    let hashValue = this.hash(key);
+    return this.slots[hashValue].delete(key);
   }
-
-  search(x) {
-    let hashValue = this.hash(x);
-    return this.slots[this.hash(x)].search(x);
-  }
-
-
-
 }
