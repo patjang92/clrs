@@ -1,7 +1,4 @@
 import DoublyLinkedListNode from './DoublyLinkedListNode';
-/**
- * @todo: must reimplement
- */
 
 /**
  * Implements Doubly Linked List class using Linked List nodes 

@@ -1,4 +1,4 @@
-import LinkedList from '../LinkedList/LinkedList';
+import LinkedListWithTail from '../LinkedList/LinkedListWithTail';
 
 export default class Queue {
 
@@ -37,6 +37,3 @@ export default class Queue {
   }
 
 }
-
-
-

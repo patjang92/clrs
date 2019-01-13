@@ -1,7 +1,4 @@
 import DoublyLinkedListNode from './DoublyLinkedListNode';
-/**
- * @todo: must reimplement
- */
 
 /**
  * Implements Doubly Linked List class using Linked List nodes 
@@ -14,7 +11,6 @@ export default class DoublyLinkedList {
    */
   constructor() {
     this.head = null;
-    // this.tail = null;
   }
 
   /**
@@ -98,18 +94,7 @@ export default class DoublyLinkedList {
       if (this.head) {
         this.head.prev = null;
       }
-      // this.tail = null;
     }
-    // case where node is head
-    // else if (this.head == node) {
-    //   this.head = this.head.next;
-    //   this.head.prev = null;
-    // }
-    // case where node is tail
-    // else if (this.tail == node) {
-    //   this.tail = this.tail.prev;
-    //   this.tail.next = null;
-    // } 
     // all other cases    
     else {
       // case where node is in the middle
