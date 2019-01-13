@@ -14,7 +14,7 @@ export default class DoublyLinkedList {
    */
   constructor() {
     this.head = null;
-    // this.tail = null;
+    this.tail = null;
   }
 
   /**
@@ -27,9 +27,9 @@ export default class DoublyLinkedList {
     if (!node) return;
 
     // case where list is empty
-    if (!this.head) {
+    if (!this.head && !this.tail) {
       this.head = node;
-      // this.tail = node;
+      this.tail = node;
       
     } else {
       // all other cases more than 1 element
@@ -52,7 +52,7 @@ export default class DoublyLinkedList {
 
   /**
    * Appends node to the end of the list as new tail
-   * Runtime Complexity: O(n)
+   * Runtime Complexity: O(1)
    * 
    * @param {LinkedListNode} node new node to be appended at the end of the list
    */
@@ -62,30 +62,21 @@ export default class DoublyLinkedList {
     // node.next = null;
 
     // case where list is empty, head == tail == null
-    if (!this.head) {
+    if (!this.head && !this.tail) {
       this.head = node;
-      // this.tail = node;
-    } else {
-      let currentNode = this.head;
-      while (currentNode.next != null) {
-        currentNode = currentNode.next;
-      }
-      currentNode.next = node;
-      node.prev = currentNode;
+      this.tail = node;
     }
-
-
     // case where list is 1 element or more
-    // else {
-    //   node.prev = this.tail;
-    //   this.tail.next = node;
-    //   this.tail = node;
-    // }
+    else {
+      node.prev = this.tail;
+      this.tail.next = node;
+      this.tail = node;
+    }
   }
 
   /**
    * Creates a new node with given value and appends it to the end of the list
-   * Runtime Complexity: O(n)
+   * Runtime Complexity: O(1)
    * 
    * @param {*} value 
    */
@@ -101,37 +92,27 @@ export default class DoublyLinkedList {
    * @param {LinkedListNode} node node to be deleted from linked list 
    */
   deleteNode(node) {
-    if (!node || !this.head) return;
+    if (!node) return;
 
-    // case where node is head (1 element)
-    if (this.head == node) {
-      this.head = this.head.next;
-
-      // case where list had more than 1 element and new head is not null
-      if (this.head) {
-        this.head.prev = null;
-      }
-      // this.tail = null;
+    // case where node is head and tail (1 element)
+    if (this.head == this.tail && this.head == node) {
+      this.head = null;
+      this.tail = null;
     }
     // case where node is head
-    // else if (this.head == node) {
-    //   this.head = this.head.next;
-    //   this.head.prev = null;
-    // }
+    else if (this.head == node) {
+      this.head = this.head.next;
+      this.head.prev = null;
+    }
     // case where node is tail
-    // else if (this.tail == node) {
-    //   this.tail = this.tail.prev;
-    //   this.tail.next = null;
-    // } 
+    else if (this.tail == node) {
+      this.tail = this.tail.prev;
+      this.tail.next = null;
+    } 
     // all other cases    
     else {
-      // case where node is in the middle
       node.prev.next = node.next;
-
-      // case where node is in the end
-      if (node.next != null) {
-        node.next.prev = node.prev;
-      }
+      node.next.prev = node.prev;
     }
   }
 
