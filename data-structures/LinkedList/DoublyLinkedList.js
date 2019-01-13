@@ -29,8 +29,6 @@ export default class DoublyLinkedList {
     // case where list is empty
     if (!this.head) {
       this.head = node;
-      // this.tail = node;
-      
     } else {
       // all other cases more than 1 element
       this.head.prev = node;
@@ -59,12 +57,9 @@ export default class DoublyLinkedList {
   appendNode(node) {
     if (!node) return;
 
-    // node.next = null;
-
     // case where list is empty, head == tail == null
     if (!this.head) {
       this.head = node;
-      // this.tail = node;
     } else {
       let currentNode = this.head;
       while (currentNode.next != null) {
@@ -73,14 +68,6 @@ export default class DoublyLinkedList {
       currentNode.next = node;
       node.prev = currentNode;
     }
-
-
-    // case where list is 1 element or more
-    // else {
-    //   node.prev = this.tail;
-    //   this.tail.next = node;
-    //   this.tail = node;
-    // }
   }
 
   /**
