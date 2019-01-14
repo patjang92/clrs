@@ -1,6 +1,5 @@
 import DoublyLinkedList from '../LinkedList/DoublyLinkedList';
 
-
 /**
  * Hash Table Implementation using Doubly Linked Lists
  */
@@ -15,12 +14,18 @@ export default class HashTable {
   /**
    * Callback function to find node in linked lists
    * 
-   * @param {*} key: key of key-value pair 
+   * @param {*} key
    */
   callback(key) {
     return (value) => value.key == key;
   }
 
+  /**
+   * Add new key-value pair to hash table
+   * 
+   * @param {*} key:
+   * @param {*} value
+   */
   set(key, value) {
     const hashValue = this.hash(key);
     this.keys[key] = hashValue;
@@ -28,12 +33,17 @@ export default class HashTable {
 
     const node = slot.search(key, this.callback(key));
     if (node) {
-      node.value = value;
+      node.value.value = value;
     } else {
-      slot.insert(value);
+      slot.insert({ key, value });
     }
   }
 
+  /**
+   * Get value by key
+   * 
+   * @param {*} key 
+   */
   get(key) {
     if (!this.has(key)) return null;
 
@@ -48,10 +58,20 @@ export default class HashTable {
     return null;
   }
 
+  /**
+   * See if key is already added
+   * 
+   * @param {*} key 
+   */
   has(key) {
     return this.keys.hasOwnProperty(key);
   }
 
+  /**
+   * Deletes key-pair entry by key
+   * 
+   * @param {*} key 
+   */
   delete(key) {
     if (!this.has(key)) return null;
 
