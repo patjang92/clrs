@@ -3,7 +3,7 @@ import LinkedListWithTail from '../LinkedList/LinkedListWithTail';
 export default class Queue {
 
   constructor() {
-    this.list = new LinkedList();
+    this.list = new LinkedListWithTail();
   }
 
   isEmpty() {

@@ -126,11 +126,21 @@ export default class DoublyLinkedList {
    * 
    * @param {*} value value that we wish to find in Linked List
    */
-  search(value) {
+  search(value = undefined, callback = undefined) {
     let currentNode = this.head;
-    while (currentNode != null && currentNode.value !== value ) {
+
+    while (currentNode) {
+      if (callback && callback(currentNode.value)) {
+        return currentNode;
+      }
+
+      if (value != undefined && currentNode.value == value) {
+        return currentNode;
+      }
+
       currentNode = currentNode.next;
     }
+
     return currentNode;
   }
 }
