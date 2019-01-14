@@ -124,7 +124,8 @@ export default class DoublyLinkedList {
    * Searches and returns first node with matching value
    * Runtime Complexity: O(n)
    * 
-   * @param {*} value value that we wish to find in Linked List
+   * @param {*} value: value that we wish to find in Linked List
+   * @param {function} callback: optional callback to determine value equality
    */
   search(value = undefined, callback = undefined) {
     let currentNode = this.head;
@@ -132,9 +133,7 @@ export default class DoublyLinkedList {
     while (currentNode) {
       if (callback && callback(currentNode.value)) {
         return currentNode;
-      }
-
-      if (value != undefined && currentNode.value == value) {
+      } else if (value != undefined && currentNode.value == value) {
         return currentNode;
       }
 
