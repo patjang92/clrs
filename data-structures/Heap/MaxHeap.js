@@ -3,7 +3,7 @@ export default class MaxHeap {
 	constructor(array = []) {
 		this.heapContainer = array;
 		if (this.getHeapSize() > 1) {
-			this.buildMaxHeap();
+			this.buildHeap();
 		} 
 	}
 
@@ -51,9 +51,9 @@ export default class MaxHeap {
 		return this.getValueByIndex(this.getParentIndex(index));
 	}
 
-	buildMaxHeap() {
+	buildHeap() {
 		for (let i = Math.floor((this.getHeapSize() - 1) / 2); i >= 0; i--) {
-			this.maxHeapifyDown(i);
+			this.heapifyDown(i);
 		}
 	}
 
@@ -62,19 +62,13 @@ export default class MaxHeap {
 
 		for (let i = this.getHeapSize() - 1; i >= 1; i--) {
 			this.swap(0, i);
-			// let temp = this.heapContainer[i];
-			// this.heapContainer[i] = this.heapContainer[0];
-			// this.heapContainer[0] = temp;
-			this.maxHeapifyDown(0, i);
+			this.heapifyDown(0, i);
 		}
 	}
 
-	maxHeapifyDown(index, heapSize = this.getHeapSize()) {
-		// let leftIndex = this.hasLeftChild(index) && this.getLeftChildIndex(index);
-		// let rightIndex = this.hasRightChild(index) && this.getRightChildIndex(index);
+	heapifyDown(index, heapSize = this.getHeapSize()) {
 		let leftIndex = this.getLeftChildIndex(index);	
 		let rightIndex = this.getRightChildIndex(index);
-		// let currentValue = getValueByIndex(index);
 		let largestIndex = index;
 
 		if (rightIndex < heapSize && this.getValueByIndex(rightIndex) > this.getValueByIndex(largestIndex)) {
@@ -86,24 +80,21 @@ export default class MaxHeap {
 
 		if (largestIndex != index) {
 			this.swap(index, largestIndex);
-			// let temp = this.heapContainer[index];
-			// this.heapContainer[index] = this.heapContainer[largestIndex];
-			// this.heapContainer[largestIndex] = temp;
-			this.maxHeapifyDown(largestIndex, heapSize);
+			this.heapifyDown(largestIndex, heapSize);
 		}
 	}
 
-	maxHeapifyUp(index) {
+	heapifyUp(index) {
 		let currentIndex = index;
 		while (this.hasParent(currentIndex) && this.getParent(currentIndex) < this.getValueByIndex(currentIndex)) {
-			swap(this.getParentIndex(currentIndex), currentIndex);
+			this.swap(this.getParentIndex(currentIndex), currentIndex);
 			currentIndex = this.getParentIndex(currentIndex);
 		}
 	}
 
 	add(x) {
 		this.heapContainer.push(x);
-		this.maxHeapifyUp(this.getHeapSize() - 1);
+		this.heapifyUp(this.getHeapSize() - 1);
 	}
 
 	remove(x) {
@@ -117,15 +108,15 @@ export default class MaxHeap {
 			} else {
 				this.heapContainer[deleteIndex] = this.heapContainer.pop();
 
-				const parent = this.parent(deleteIndex);
+				const parent = this.getParent(deleteIndex);
 
 				// Case where has children AND no parent OR parent is in correct order -> heapify down
 				if (this.hasLeftChild(deleteIndex) && (!parent || parent > this.getValueByIndex(deleteIndex))) {
-					this.maxHeapifyDown(deleteIndex);
+					this.heapifyDown(deleteIndex);
 				}
 				// Otherwise, parent < current -> heapify up
 				else {
-					this.maxHeapifyUp(deleteIndex)
+					this.heapifyUp(deleteIndex)
 				}
 			}
 		}
