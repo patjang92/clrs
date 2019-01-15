@@ -11,12 +11,6 @@ export default class MaxHeap {
 		return this.heapContainer.length;
 	}
 
-	buildMaxHeap() {
-		for (let i = Math.floor((this.getHeapSize() - 1) / 2); i >= 0; i--) {
-			this.maxHeapify(i);
-		}
-	}
-
 	getLeftChildIndex(index) {
 		return (2 * index) + 1; 
 	}
@@ -57,27 +51,25 @@ export default class MaxHeap {
 		return this.getValueByIndex(this.getParentIndex(index));
 	}
 
+	buildMaxHeap() {
+		for (let i = Math.floor((this.getHeapSize() - 1) / 2); i >= 0; i--) {
+			this.maxHeapifyDown(i);
+		}
+	}
+
 	sort() {
 		if (this.getHeapSize() <= 1) return;
 
 		for (let i = this.getHeapSize() - 1; i >= 1; i--) {
-			let temp = this.heapContainer[i];
-			this.heapContainer[i] = this.heapContainer[0];
-			this.heapContainer[0] = temp;
-			this.maxHeapify(0, i);
+			this.swap(0, i);
+			// let temp = this.heapContainer[i];
+			// this.heapContainer[i] = this.heapContainer[0];
+			// this.heapContainer[0] = temp;
+			this.maxHeapifyDown(0, i);
 		}
 	}
 
-	getSortedArray(a) {
-		this.sort();
-		return this.heapContainer;
-	}
-
-	toArray() {
-		return this.heapContainer;
-	}
-
-	maxHeapify(index, heapSize = this.getHeapSize()) {
+	maxHeapifyDown(index, heapSize = this.getHeapSize()) {
 		// let leftIndex = this.hasLeftChild(index) && this.getLeftChildIndex(index);
 		// let rightIndex = this.hasRightChild(index) && this.getRightChildIndex(index);
 		let leftIndex = this.getLeftChildIndex(index);	
@@ -93,10 +85,74 @@ export default class MaxHeap {
 		}
 
 		if (largestIndex != index) {
-			let temp = this.heapContainer[index];
-			this.heapContainer[index] = this.heapContainer[largestIndex];
-			this.heapContainer[largestIndex] = temp;
-			this.maxHeapify(largestIndex, heapSize);
+			this.swap(index, largestIndex);
+			// let temp = this.heapContainer[index];
+			// this.heapContainer[index] = this.heapContainer[largestIndex];
+			// this.heapContainer[largestIndex] = temp;
+			this.maxHeapifyDown(largestIndex, heapSize);
 		}
+	}
+
+	maxHeapifyUp(index) {
+		let currentIndex = index;
+		while (this.hasParent(currentIndex) && this.getParent(currentIndex) < this.getValueByIndex(currentIndex)) {
+			swap(this.getParentIndex(currentIndex), currentIndex);
+			currentIndex = this.getParentIndex(currentIndex);
+		}
+	}
+
+	add(x) {
+		this.heapContainer.push(x);
+		this.maxHeapifyUp(this.getHeapSize() - 1);
+	}
+
+	remove(x) {
+		let deleteCount = this.find(x).length;
+
+		for (let i = 0; i < deleteCount; i++) {
+			const deleteIndex = this.find(x)[0];
+
+			if (deleteIndex === (this.getHeapSize() - 1)) {
+				this.heapContainer.pop();
+			} else {
+				this.heapContainer[deleteIndex] = this.heapContainer.pop();
+
+				const parent = this.parent(deleteIndex);
+
+				// Case where has children AND no parent OR parent is in correct order -> heapify down
+				if (this.hasLeftChild(deleteIndex) && (!parent || parent > this.getValueByIndex(deleteIndex))) {
+					this.maxHeapifyDown(deleteIndex);
+				}
+				// Otherwise, parent < current -> heapify up
+				else {
+					this.maxHeapifyUp(deleteIndex)
+				}
+			}
+		}
+	}
+
+	find(x) {
+		let foundIndices = [];
+		for (let i = 0; i < this.getHeapSize(); i++) {
+			if (this.getValueByIndex(i) == x) {
+				foundIndices.push(i);
+			}
+		}
+		return foundIndices;
+	}
+
+	swap(a, b) {
+		const tmp = this.heapContainer[a];
+		this.heapContainer[a] = this.heapContainer[b];
+		this.heapContainer[b] = tmp;
+	}
+
+	getSortedArray() {
+		this.sort();
+		return this.heapContainer;
+	}
+
+	toArray() {
+		return this.heapContainer;
 	}
 }

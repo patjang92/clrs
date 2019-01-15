@@ -24,7 +24,7 @@ export default class MaxPriorityQueue extends MaxHeap {
 		const max = this.heapContainer[0];
 		this.heapContainer[0] = this.heapContainer[this.heapContainer.length - 1];
 		this.heapContainer.length--;
-		this.maxHeapify(0);
+		this.maxHeapifyDown(0);
 		return max;
 	}
 
