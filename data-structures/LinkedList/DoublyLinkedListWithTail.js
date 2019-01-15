@@ -108,8 +108,14 @@ export default class DoublyLinkedList {
     } 
     // all other cases    
     else {
-      node.prev.next = node.next;
-      node.next.prev = node.prev;
+
+      // check if prev and next are not null
+      if (node.prev) {
+        node.prev.next = node.next;
+      }
+      if (node.next) {
+        node.next.prev = node.prev;
+      }
     }
   }
 

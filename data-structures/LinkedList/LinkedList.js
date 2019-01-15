@@ -50,9 +50,12 @@ export default class LinkedList {
     if (!node) return;
     node.next = null;
 
+    // Case where list is empty
     if (this.head == null) {
       this.head = node;
-    } else {
+    } 
+    // All other cases, iterate to end
+    else {
       let currentNode = this.head;
       while (currentNode.next != null) {
         currentNode = currentNode.next;
@@ -88,10 +91,12 @@ export default class LinkedList {
     // Case 2: Else we need to iterate to the node before the one we want to delete
     else {
       let currentNode = this.head;
-      while (currentNode.next != node) {
+      while (currentNode && currentNode.next != node) {
         currentNode = currentNode.next;
       }
+      if (currentNode) {
         currentNode.next = currentNode.next.next;
+      }
     }
   }
 
@@ -135,6 +140,22 @@ export default class LinkedList {
       currentNode = currentNode.next;
     }
     return array;
+  }
+
+  insertAtIndex(index, value) {
+
+  }
+
+  eraseAtIndex(index) {
+
+  }
+
+  nthNodeFromEnd(n) {
+
+  }
+
+  reverse() {
+
   }
 
 

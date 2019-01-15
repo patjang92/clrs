@@ -98,7 +98,9 @@ export default class DoublyLinkedList {
     // all other cases    
     else {
       // case where node is in the middle
-      node.prev.next = node.next;
+      if (node.prev) {
+        node.prev.next = node.next;
+      }
 
       // case where node is in the end
       if (node.next != null) {

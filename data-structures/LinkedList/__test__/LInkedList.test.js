@@ -125,6 +125,21 @@ describe('LinkedList', () => {
     expect(list.head.next).toEqual(node2);
   }) 
 
+  it('should ignore delete nonexistent node', () => {
+    const list = new LinkedList();
+    const node1 = new LinkedListNode(1);
+    const node2 = new LinkedListNode(2);
+    const node3 = new LinkedListNode(3);
+
+    list.insertNode(node1); // 1
+    list.insertNode(node2); // 2 - 1
+    list.deleteNode(node3); // null
+    expect(list.head).toEqual(node2);
+    expect(list.head.next).toEqual(node1);
+    // expect(list.tail).toEqual(node1);
+
+  })
+
   it('should return list elements in array', () => {
     const list = new LinkedList();
     expect(list.toArray()).toEqual([]);

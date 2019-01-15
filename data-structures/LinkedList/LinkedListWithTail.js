@@ -26,10 +26,16 @@ export default class LinkedListWithTail {
    */
   insertNode(node) {
     if (!node) return;
-    node.next = this.head;
-    this.head = node;
-    if (this.tail == null) {
-      this.tail = node;  
+
+    // Case where list is empty
+    if (this.head == null) {
+      this.head = node;
+      this.tail = node;
+    } 
+    // call other cases
+    else {
+      node.next = this.head;
+      this.head = node;
     }
   }
 
@@ -52,14 +58,17 @@ export default class LinkedListWithTail {
    */
   appendNode(node) {
     if (!node) return;
-    node.next = null;
+
+    // Case where list is empty
     if (this.head == null) {
       this.head = node;
-    }
-    if (this.tail != null) {
-      this.tail.next = node;
+      this.tail = node;
     } 
-    this.tail = node;
+    // All other cases
+    else {
+      this.tail.next = node;
+      this.tail = node;
+    }
   }
 
   /**
@@ -96,20 +105,20 @@ export default class LinkedListWithTail {
     // Else we need to iterate to the node before the one we want to delete
     else {
       let currentNode = this.head;
-      while (currentNode.next != node) {
+      while (currentNode && currentNode.next != node) {
         currentNode = currentNode.next;
       }
 
-      // Case 3: want to delete tail
+      // node not found
+      if (!currentNode) return;
+
+      // Case 3: node is in middle
+      currentNode.next = currentNode.next.next;
+
+      // Case 4: node is tail
       if (this.tail == node) {
         this.tail = currentNode;
-        currentNode.next = null;
       }
-
-      // Case 4: want to delete middle element      
-      else {
-        currentNode.next = currentNode.next.next;
-      }      
     }
   }
 

@@ -303,4 +303,18 @@ describe('LinkedList', () => {
     expect(list.tail).toBeNull();
   })
 
+  it('should ignore delete nonexistent node', () => {
+    const list = new DoublyLinkedList();
+    const node1 = new DoublyLinkedListNode(1);
+    const node2 = new DoublyLinkedListNode(2);
+    const node3 = new DoublyLinkedListNode(3);
+
+    list.insertNode(node1); // 1
+    list.insertNode(node2); // 2 - 1
+    list.deleteNode(node3); // null
+    expect(list.head).toEqual(node2);
+    expect(list.head.next).toEqual(node1);
+    expect(list.tail).toEqual(node1);
+  })
+
 });
