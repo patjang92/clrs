@@ -142,8 +142,40 @@ export default class LinkedList {
     return array;
   }
 
-  insertAtIndex(index, value) {
+  /**
+   * 
+   * @param {*} index 
+   * @param {*} node 
+   */
+  insertNodeAtIndex(index, node) {
+    if (index < 0 || !node) return;
 
+    if (index == 0) {
+      // insert(n);
+      node.next = this.head;
+      this.head = node;
+      return;
+    }
+
+    // we know index > 0, but if list is empty then just return
+    if (!this.head) return;
+
+    // need to find the node before the index
+    let currentNode = this.head;
+
+    while (index > 1 && currentNode.next != null) {
+      currentNode = currentNode.next;
+      index--;
+    }
+
+    // index is past length of list
+    if (index > 1 && currentNode.next == null) return;
+
+    // insert
+    node.next = currentNode.next;
+    currentNode.next = node;
+
+    return node;
   }
 
   eraseAtIndex(index) {
