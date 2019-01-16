@@ -307,4 +307,33 @@ describe('LinkedList', () => {
     expect(list.tail).toEqual(node2);
   })
 
+  it('should return nth node from end', () => {
+    const list = new LinkedList();
+    const node1 = new LinkedListNode(1);
+    const node2 = new LinkedListNode(2);
+    const node3 = new LinkedListNode(3);
+
+    // 1. return any nth node from empty list
+    expect(list.getNthNodeFromEnd(0)).toBeNull();
+    expect(list.getNthNodeFromEnd(1)).toBeNull();
+
+    // 2. return 0th node from single list
+    list.insertNode(node1);
+    expect(list.getNthNodeFromEnd(0)).toEqual(node1);
+
+    // 3. return 1st from last ndoe from single list (out of bounds)
+    expect(list.getNthNodeFromEnd(1)).toBeNull();
+
+    // 4. return 0th from last node from multiple node list
+    list.insertNode(node2);
+    expect(list.getNthNodeFromEnd(0)).toEqual(node1);
+
+    // 5. return length - 1 node from multiple node list
+    expect(list.getNthNodeFromEnd(1)).toEqual(node2)
+
+    // 6. return middle node from multiple node list
+    list.insertNode(node3);
+    expect(list.getNthNodeFromEnd(1)).toEqual(node2);
+  })
+
 });

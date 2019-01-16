@@ -253,7 +253,28 @@ export default class LinkedListWithTail {
   }
 
   getNthNodeFromEnd(n) {
+    // if empty return null
+    if (!this.head) return null;
 
+    // find length
+    let currentNode = this.head;
+    let length = 0;
+    while (currentNode) {
+      length++;
+      currentNode = currentNode.next;
+    }
+
+    // if length <= n out of bounds, n is index
+    if (length <= n) return null;
+
+    let distanceToN = length - 1;
+    currentNode = this.head;
+    while (distanceToN > n) {
+      distanceToN--;
+      currentNode = currentNode.next;
+    }
+
+    return currentNode;
   }
 
   reverse() {
