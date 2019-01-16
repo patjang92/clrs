@@ -248,4 +248,103 @@ describe('LinkedList', () => {
     expect(list.head.next).toEqual(node1);
   })
 
+  it('should add node at specific index', () => {
+    const list = new DoublyLinkedList();
+    const node1 = new DoublyLinkedListNode(1);
+    const node2 = new DoublyLinkedListNode(2);
+    const node3 = new DoublyLinkedListNode(3);
+    const node4 = new DoublyLinkedListNode(4);
+    const node5 = new DoublyLinkedListNode(5);
+    const node6 = new DoublyLinkedListNode(6);
+
+    // 1. index > 0 of empty list
+    list.insertNodeAtIndex(1, node1); // empty
+    expect(list.head).toBeNull();
+
+    // 2. start of empty list
+    list.insertNodeAtIndex(0, node1); // 1
+    expect(list.head).toEqual(node1);
+    expect(list.head.next).toBeNull();
+
+
+    // 3. second position of single list
+    list.insertNodeAtIndex(1, node2); // 1 - 2
+    expect(list.head).toEqual(node1);
+    expect(list.head.next).toEqual(node2);
+    expect(list.head.next.prev).toEqual(node1);
+
+
+    // 3. start of single list
+    list.insertNodeAtIndex(0, node3); // 3 - 1 - 2
+    expect(list.head).toEqual(node3);
+    expect(list.head.next).toEqual(node1);
+    expect(list.head.next.next).toEqual(node2);
+    expect(list.head.next.next.prev).toEqual(node1);
+
+
+    // 4. middle of list
+    list.insertNodeAtIndex(1, node4); // 3 - 4 - 1 - 2
+    expect(list.head).toEqual(node3);
+    expect(list.head.next).toEqual(node4);
+    expect(list.head.next.next).toEqual(node1);
+    expect(list.head.next.next.next).toEqual(node2);
+    expect(list.head.next.next.next.prev).toEqual(node1);
+
+
+    // 5. tail index of list
+    list.insertNodeAtIndex(3, node5); // 3 - 4 - 1 - 5 - 2
+    expect(list.head).toEqual(node3);
+    expect(list.head.next).toEqual(node4);
+    expect(list.head.next.next).toEqual(node1);
+    expect(list.head.next.next.next).toEqual(node5);
+    expect(list.head.next.next.next.next).toEqual(node2);
+    expect(list.head.next.next.next.next.prev).toEqual(node5);
+
+    // 6. out of bound of list
+    list.insertNodeAtIndex(6, node6); // 3 - 4 - 1 - 5 - 2
+    expect(list.head).toEqual(node3);
+    expect(list.head.next).toEqual(node4);
+    expect(list.head.next.next).toEqual(node1);
+    expect(list.head.next.next.next).toEqual(node5);
+    expect(list.head.next.next.next.next).toEqual(node2);
+    expect(list.head.next.next.next.next.prev).toEqual(node5);
+  })
+
+  it('should delete node at index', () => {
+    const list = new DoublyLinkedList();
+    const node1 = new DoublyLinkedListNode(1);
+    const node2 = new DoublyLinkedListNode(2);
+    const node3 = new DoublyLinkedListNode(3);
+
+    // 1. delete from any index of empty node
+    list.deleteByIndex(0)
+    expect(list.head).toBeNull();
+    list.deleteByIndex(1)
+    expect(list.head).toBeNull();
+
+    // 2. delete from first index of single element list
+    list.insertNode(node1);
+    list.deleteByIndex(0);
+    expect(list.head).toBeNull();
+
+    // 3. delete from out of bounds of single element list
+    list.insertNode(node1);
+    list.deleteByIndex(1);
+    expect(list.head).toEqual(node1);
+
+    // 4. delete tail index of multiple element list
+    list.insertNode(node2);
+    list.deleteByIndex(1);
+    expect(list.head).toEqual(node2);
+    expect(list.head.next).toBeNull();
+
+    // 5. delete element in between head and tail of multiple element list
+    list.insertNode(node1);
+    list.insertNode(node3);
+    list.deleteByIndex(1);
+    expect(list.head).toEqual(node3);
+    expect(list.head.next).toEqual(node2);
+    expect(list.head.next.prev).toEqual(node3);
+  })
+
 });

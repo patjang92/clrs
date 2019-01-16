@@ -24,10 +24,13 @@ export default class DoublyLinkedList {
 
     // case where list is empty
     if (!this.head) {
+      node.prev = null;
+      node.next = null;
       this.head = node;
     } else {
       // all other cases more than 1 element
       this.head.prev = node;
+      node.prev = null;
       node.next = this.head;
       this.head = node;
     }
@@ -55,6 +58,8 @@ export default class DoublyLinkedList {
 
     // case where list is empty, head == tail == null
     if (!this.head) {
+      node.prev = null;
+      node.next = null;
       this.head = node;
     } else {
       let currentNode = this.head;
@@ -63,6 +68,7 @@ export default class DoublyLinkedList {
       }
       currentNode.next = node;
       node.prev = currentNode;
+      node.next = null;
     }
   }
 
@@ -144,4 +150,100 @@ export default class DoublyLinkedList {
 
     return currentNode;
   }
+
+  /**
+   * Inserts node into index
+   * 
+   * @param {number} index 
+   * @param {LinkedListNode} node 
+   */
+  insertNodeAtIndex(index, n) {
+    // if index < 0 or !n return
+    if (index < 0 || !n) return;
+
+    // 1. index == 0, insert at front
+    if (index == 0) {
+      // is list nonempty?
+      if (this.head) {
+        this.head.prev = n;
+        n.next = this.head;
+        n.prev = null;
+        this.head = n;
+        return;
+      }
+      // list is empty
+      else {
+        n.next = null;
+        n.prev = null;
+        this.head = n;
+        return;
+      }
+    }
+
+    // 2. index must be > 0 so if list is empty then return
+    if (!this.head) return;
+
+    let distanceToIndex = index;
+    let c = this.head;
+    // 3. iterate until distance == 1 || c.next == null
+    while (distanceToIndex > 1 && c.next != null) {
+      distanceToIndex--;
+      c = c.next;
+    }
+
+    // if distance > 1 and c.next == null, then return
+    if (distanceToIndex > 1 && c.next == null) return;
+
+    // insert node
+    n.prev = c;
+    n.next = c.next;
+
+    // check if end of list
+    if (c.next) {
+      c.next.prev = n;
+    }
+    c.next = n;
+  }
+
+  deleteByIndex(index) {
+    // 1. index < 0 || !this.head
+    if (index < 0 || !this.head) return;
+
+
+    // 2. index == 0
+    if (index == 0) {
+      this.head = this.head.next;
+
+      // if not single element list
+      if (this.head) {
+        this.head.prev = null;
+      }
+      return;
+    }
+
+    // 3. go to index || c.next == null
+    let c = this.head;
+    let distanceToIndex = index;
+    while (distanceToIndex > 1 && c.next != null) {
+      distanceToIndex--;
+      c = c.next;
+    }
+
+    // if distance > 1 && c.next == null, out of bounds
+    if (distanceToIndex > 1 && c.next == null) return;
+
+    // 4. delete and update if not tail
+    if (c.next && c.next.next) {
+      c.next.next.prev = c;
+      c.next = c.next.next;
+    } 
+    // 5. is tail
+    else {
+      c.next = null;
+    }
+  }
+
+  getNthNodeFromEnd(n) {}
+
+  reverse() {}
 }

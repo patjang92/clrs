@@ -25,13 +25,15 @@ export default class DoublyLinkedList {
 
     // case where list is empty
     if (!this.head && !this.tail) {
+      node.prev = null;
+      node.next = null;
       this.head = node;
       this.tail = node;
-      
     } else {
       // all other cases more than 1 element
       this.head.prev = node;
       node.next = this.head;
+      node.prev = null;
       this.head = node;
     }
   }
@@ -56,15 +58,16 @@ export default class DoublyLinkedList {
   appendNode(node) {
     if (!node) return;
 
-    // node.next = null;
-
     // case where list is empty, head == tail == null
     if (!this.head && !this.tail) {
+      node.next = null;
+      node.prev = null;
       this.head = node;
       this.tail = node;
     }
     // case where list is 1 element or more
     else {
+      node.next = null;
       node.prev = this.tail;
       this.tail.next = node;
       this.tail = node;
@@ -109,7 +112,7 @@ export default class DoublyLinkedList {
     // all other cases    
     else {
 
-      // check if prev and next are not null
+      // check if prev and next are not null, can't be a node in this list
       if (node.prev) {
         node.prev.next = node.next;
       }
@@ -145,4 +148,12 @@ export default class DoublyLinkedList {
     }
     return currentNode;
   }
+
+  insertNodeAtIndex(index, n) {}
+
+  deleteByIndex(index) {}
+
+  getNthNodeFromEnd(n) {}
+
+  reverse() {}
 }
