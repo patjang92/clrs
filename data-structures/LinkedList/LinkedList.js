@@ -178,8 +178,37 @@ export default class LinkedList {
     return node;
   }
 
-  eraseAtIndex(index) {
+  /**
+   * 
+   * @param {*} index 
+   */
+  deleteByIndex(index) {
+    if (index < 0 || !this.head) return;
 
+    // case where index == head
+    if (index == 0) {
+      this.head = this.head.next;
+      return;
+    }
+
+    // otherwise, iterate until c.next is nth place
+    let currentNode = this.head;
+    while (index > 1 && currentNode.next != null) {
+      currentNode = currentNode.next;
+      index--;
+    } 
+
+    // out of bounds
+    if (index > 1 && currentNode.next == null) {
+      return;
+    }
+
+    if (currentNode.next) {
+      currentNode.next = currentNode.next.next;
+    } else {
+      currentNode.next = null;
+    }
+    // currentNode.next = currentNode.next.next;
   }
 
   nthNodeFromEnd(n) {
