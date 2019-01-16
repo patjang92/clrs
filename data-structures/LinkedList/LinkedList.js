@@ -211,8 +211,31 @@ export default class LinkedList {
     // currentNode.next = currentNode.next.next;
   }
 
-  nthNodeFromEnd(n) {
+  getNthNodeFromEnd(n) {
+    // first find length of list
+    if (!this.head) return null;
 
+    let currentNode = this.head;
+    let length = 0;
+    
+    while (currentNode) {
+      length++;
+      currentNode = currentNode.next;
+    }
+
+    // if n >= length of list, can't return
+    if (n >= length) return null;
+
+    // then run through, decrementing length at each interval until it is n
+    let distanceToEnd = length-1;
+    currentNode = this.head;
+
+    while (distanceToEnd > n) {
+      currentNode = currentNode.next;
+      distanceToEnd--;
+    }
+
+    return currentNode;
   }
 
   reverse() {
