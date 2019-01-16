@@ -208,8 +208,48 @@ export default class LinkedListWithTail {
     return;
   }
 
-  deleteAtIndex(index) {
+  /**
+   * Deletes node at index
+   * 
+   * @param {number} index 
+   */
+  deleteByIndex(index) {
+    // index < 0 or list is empty, return
+    if (index < 0 || !this.head) return;
 
+    // index == 0, update head (and possibly tail)
+    if (index == 0) {
+      if (this.head == this.tail) {
+        this.head = null;
+        this.tail = null;
+      } else {
+        this.head = this.head.next;
+      }
+      return;
+    }
+
+    let distanceToIndex = index;
+    let currentNode = this.head;
+
+    // iterate until node.next = index
+    while (distanceToIndex > 1 && currentNode.next != null) {
+      distanceToIndex--;
+      currentNode = currentNode.next;
+    }
+
+    // if node.next before distance == 1, then out of bounds
+    if (currentNode.next == null && distanceToIndex > 1) return;
+
+    // if next != null, update next to next.next
+    if (currentNode.next != null) {
+      // update tail
+
+      if (currentNode.next == this.tail) {
+        this.tail = currentNode;
+      }
+      currentNode.next = currentNode.next.next;
+    }
+    return;
   }
 
   getNthNodeFromEnd(n) {

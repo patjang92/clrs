@@ -243,11 +243,11 @@ describe('LinkedList', () => {
 
     // 5. delete element in between head and tail of multiple element list
     list.insertNode(node1);
-    list.insertNode(node2);
+    // list.insertNode(node2);
     list.insertNode(node3);
     list.deleteByIndex(1);
     expect(list.head).toEqual(node3);
-    expect(list.head.next).toEqual(node1);
+    expect(list.head.next).toEqual(node2);
   })
 
   it('should return nth node from end', () => {

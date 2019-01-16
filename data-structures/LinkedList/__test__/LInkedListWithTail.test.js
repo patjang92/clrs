@@ -260,7 +260,51 @@ describe('LinkedList', () => {
     expect(list.head.next.next.next).toEqual(node5);
     expect(list.head.next.next.next.next).toEqual(node2);
     expect(list.tail).toEqual(node2);
+  })
 
+  it('should delete node at index', () => {
+    const list = new LinkedList();
+    const node1 = new LinkedListNode(1);
+    const node2 = new LinkedListNode(2);
+    const node3 = new LinkedListNode(3);
+
+    // 1. delete from any index of empty node
+    list.deleteByIndex(0)
+    expect(list.head).toBeNull();
+    expect(list.tail).toBeNull();
+    list.deleteByIndex(1)
+    expect(list.head).toBeNull();
+    expect(list.tail).toBeNull();
+
+
+    // 2. delete from first index of single element list
+    list.insertNode(node1); // 1
+    list.deleteByIndex(0); // empty
+    expect(list.head).toBeNull();
+    expect(list.tail).toBeNull();
+
+
+    // 3. delete from out of bounds of single element list
+    list.insertNode(node1); // 1
+    list.deleteByIndex(1);
+    expect(list.head).toEqual(node1);
+    expect(list.tail).toEqual(node1);
+
+    // 4. delete tail index of multiple element list
+    list.insertNode(node2); // 2 - 1
+    list.deleteByIndex(1); // 2
+    expect(list.head).toEqual(node2);
+    expect(list.head.next).toBeNull();
+    expect(list.tail).toEqual(node2);
+
+    // 5. delete element in between head and tail of multiple element list
+    list.insertNode(node1); // 1 - 2
+    // list.insertNode(node2); 
+    list.insertNode(node3); // 3 - 1 - 2
+    list.deleteByIndex(1); // 3 - 2
+    expect(list.head).toEqual(node3);
+    expect(list.head.next).toEqual(node2);
+    expect(list.tail).toEqual(node2);
   })
 
 });
