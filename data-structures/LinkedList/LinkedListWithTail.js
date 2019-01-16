@@ -278,7 +278,23 @@ export default class LinkedListWithTail {
   }
 
   reverse() {
+    // if empty or single element do nthing
+    if (!this.head || this.head == this.tail) return;
 
+    let currentNode = this.head;
+    this.tail = currentNode;
+
+    let prev = null;
+    let next = null;
+    while (currentNode) {
+      next = currentNode.next;
+      currentNode.next = prev;
+      prev = currentNode;
+      currentNode = next;
+    }
+
+    this.head = prev;
+    return this.head;
   }
 
 }
