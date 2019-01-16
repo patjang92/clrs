@@ -164,5 +164,60 @@ export default class LinkedListWithTail {
     return array;
   }
 
+  /**
+   * 
+   * @param {number} index: max possible value is length of list (append at end) 
+   */
+  insertNodeAtIndex(index, node) {
+    // if index < 0 return
+    if (index < 0) return;
+
+    // if index == 0, update head
+    if (index == 0) {
+      node.next = this.head;
+      this.head = node;
+      if (this.tail == null) {
+        this.tail = this.head;
+      }
+      return;
+    }
+
+    // if index > 0 but head == null aka list is empty, return
+    if (!this.head) return;
+
+    // else, count = index && iterate / decrement until c.next is count == 1 or c.next == null
+    let currentNode = this.head;
+    let distanceToIndex = index;
+    while (distanceToIndex > 1 && currentNode.next != null) {
+      distanceToIndex--;
+      currentNode = currentNode.next;
+    }
+
+    // if c.next == null && count > 1, out of bounds
+    if (distanceToIndex > 1 && currentNode.next == null) return;
+
+    // assign node.next and c.next
+    node.next = currentNode.next;
+    currentNode.next = node;
+
+    // if c.next was null aka c == tail, node is now new tail
+    if (this.tail == currentNode) {
+      this.tail = node;
+    }
+
+    return;
+  }
+
+  deleteAtIndex(index) {
+
+  }
+
+  getNthNodeFromEnd(n) {
+
+  }
+
+  reverse() {
+
+  }
 
 }

@@ -245,6 +245,9 @@ export default class LinkedList {
     return currentNode;
   }
 
+  /**
+   * Reverses nodes in list
+   */
   reverse() {
     // empty list or list has one element, just return
     if (!this.head || !this.head.next) return;
