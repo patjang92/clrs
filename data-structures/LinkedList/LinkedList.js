@@ -143,9 +143,10 @@ export default class LinkedList {
   }
 
   /**
+   * Inserts node into index
    * 
-   * @param {*} index 
-   * @param {*} node 
+   * @param {number} index 
+   * @param {LinkedListNode} node 
    */
   insertNodeAtIndex(index, node) {
     if (index < 0 || !node) return;
@@ -179,8 +180,9 @@ export default class LinkedList {
   }
 
   /**
+   * Deletes node at index
    * 
-   * @param {*} index 
+   * @param {number} index 
    */
   deleteByIndex(index) {
     if (index < 0 || !this.head) return;
@@ -211,6 +213,11 @@ export default class LinkedList {
     // currentNode.next = currentNode.next.next;
   }
 
+  /**
+   * Get nth node from end (n being index)
+   * 
+   * @param {number} n 
+   */
   getNthNodeFromEnd(n) {
     // first find length of list
     if (!this.head) return null;
@@ -239,7 +246,31 @@ export default class LinkedList {
   }
 
   reverse() {
+    // empty list or list has one element, just return
+    if (!this.head || !this.head.next) return;
 
+    let currentNode = this.head;
+    let prev = null;
+    let next = null;
+
+    
+    while (currentNode) {
+      // save next node
+      next = currentNode.next;
+
+      // assign new next node (prev = currentNode of last iteration)
+      currentNode.next = prev;
+
+      // assign new prev (currentNode, carried over to next iteration)
+      prev = currentNode;
+
+      // update currentNode to original next
+      currentNode = next;
+    }
+
+    // update head
+    this.head = prev;
+    return prev;
   }
 
 

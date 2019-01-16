@@ -279,4 +279,32 @@ describe('LinkedList', () => {
     expect(list.getNthNodeFromEnd(1)).toEqual(node2);
   })
 
+  it('should reverse list', () => {
+    const list = new LinkedList();
+    const node1 = new LinkedListNode(1);
+    const node2 = new LinkedListNode(2);
+    const node3 = new LinkedListNode(3);
+
+    // 1. list is empty
+    list.reverse();
+    expect(list.head).toBeNull();
+
+    // 2. list has 1 element
+    list.insertNode(node1);
+    list.reverse();
+    expect(list.head).toEqual(node1);
+
+    // 3. list has more than 1 element
+    list.insertNode(node2) // 2 - 1
+    list.reverse() // 1 - 2
+    expect(list.head).toEqual(node1);
+    expect(list.head.next).toEqual(node2);
+
+    list.insertNode(node3); // 3 - 1 - 2
+    list.reverse(); // 2 - 1 - 3
+    expect(list.head).toEqual(node2);
+    expect(list.head.next).toEqual(node1);
+    expect(list.head.next.next).toEqual(node3);    
+  })
+
 });
