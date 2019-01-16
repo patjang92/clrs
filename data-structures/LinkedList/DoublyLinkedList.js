@@ -249,6 +249,11 @@ export default class DoublyLinkedList {
     }
   }
 
+  /**
+   * Get nth node from end (n being index)
+   * 
+   * @param {number} n 
+   */
   getNthNodeFromEnd(n) {
     if (n < 0 || !this.head) return null;
 
@@ -267,7 +272,7 @@ export default class DoublyLinkedList {
     // starting from length - 1 until n, cycle through
     c = this.head;
     let distanceToN = length - 1;
-    
+
     while (distanceToN > n) {
       distanceToN--;
       c = c.next;
@@ -276,5 +281,23 @@ export default class DoublyLinkedList {
     return c;
   }
 
-  reverse() {}
+  reverse() {
+    // 1. no list or single element
+    if (!this.head || !this.head.next) return;
+
+    // get c, prev, next and start
+    let c = this.head;
+    let prev = null;
+    let next = null;
+    while (c != null) {
+      next = c.next;
+      c.prev = c.next;
+      c.next = prev;
+      prev = c;
+      c = next;
+    }
+
+    // reassign head
+    this.head = prev;
+  }
 }
