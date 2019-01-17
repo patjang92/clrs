@@ -405,7 +405,6 @@ describe('LinkedList', () => {
     expect(list.head.next.prev).toEqual(node2);
     expect(list.head.next.next).toEqual(node3);    
     expect(list.head.next.next.prev).toEqual(node1);
-
   })
 
 });

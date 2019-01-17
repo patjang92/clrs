@@ -149,7 +149,65 @@ export default class DoublyLinkedList {
     return currentNode;
   }
 
-  insertNodeAtIndex(index, n) {}
+
+  /**
+   * Inserts node into index
+   * 
+   * @param {number} index 
+   * @param {LinkedListNode} node 
+   */
+  insertNodeAtIndex(index, n) {
+    // 1. index < 0 || !n
+    if (index < 0 || !n) return;
+
+    // 2. index == 0
+    if (index == 0) {
+      // empty
+      if (!this.head) {
+        n.prev = null;
+        n.next = null;
+        this.head = n;
+        this.tail = n;
+      } 
+      // not empty      
+      else {
+        this.head.prev = n;
+        n.next = this.head;
+        n.prev = null;
+        this.head = n;
+      }
+      return;
+    }
+
+    // 3. if index > 0 && !head OOB
+    if (!this.head) return;
+
+    // iterate to index == 1 && c.next != null
+    let c = this.head;
+    let distanceToIndex = index;
+
+    while (distanceToIndex > 1 && c.next != null) {
+      distanceToIndex--;
+      c = c.next;
+    }
+
+    // index > 1 && c.next == null OOB
+    if (index > 1 && c.next == null) return;
+
+    // 4. check if not tailtail
+    if (c.next) {
+      c.next.prev = n;
+      n.next = c.next;
+    } 
+    // 5. if tail, update
+    else {
+      n.next = null;
+      this.tail = n;
+    }
+
+    n.prev = c;
+    c.next = n;
+  }
 
   deleteByIndex(index) {}
 
