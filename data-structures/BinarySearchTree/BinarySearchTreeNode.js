@@ -66,7 +66,11 @@ export default class BinarySearchTreeNode {
     return this;
   }
 
-
+  /**
+   * 
+   * @param {*} n 
+   * @returns {boolean}
+   */
   removeChild(n) {
     if (this.left && this.left == n) {
       this.left = null;
@@ -79,6 +83,26 @@ export default class BinarySearchTreeNode {
     }
 
     return false;
+  }
+
+  /**
+   * 
+   * @param {*} value 
+   */
+  search(value) {
+    if (value == null) return null;
+
+    if (this.value == value) return this;
+
+    if (value < this.value && this.left) {
+      return this.left.search(value);
+    } 
+    
+    if (value > this.value && this.right) {
+      return this.right.search(value)
+    }
+
+    return null;
   }
 
   /**
