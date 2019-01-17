@@ -199,7 +199,35 @@ describe('BinarySearchTreeNode', () => {
     expect(e.successor).toEqual(a);
     expect(f.successor).toEqual(c);
     expect(g.successor).toBeNull();
+  })
 
+  it('should find predecessor', () => {
+    let a = new Node(8);
+    let b = new Node(3);
+    let c = new Node(10);
+    let d = new Node(1);
+    let e = new Node(6);
+    let f = new Node(9);
+    let g = new Node(14);
 
+    expect(a.predecessor).toBeNull();
+
+    a.setLeft(b);
+    expect(a.predecessor).toEqual(b);
+    expect(b.predecessor).toBeNull();
+
+    a.setRight(c);
+    b.setLeft(d);
+    b.setRight(e);
+    c.setLeft(f);
+    c.setRight(g);
+
+    expect(a.predecessor).toEqual(e);
+    expect(b.predecessor).toEqual(d);
+    expect(c.predecessor).toEqual(f);
+    expect(d.predecessor).toBeNull();
+    expect(e.predecessor).toEqual(b);
+    expect(f.predecessor).toEqual(a);
+    expect(g.predecessor).toEqual(c);
   })
 })

@@ -142,6 +142,8 @@ export default class BinarySearchTreeNode {
   // }
 
   /**
+   * Get in-order successor
+   * 
    * @returns {BinarySearchTreeNode}
    */
   get successor() {
@@ -155,6 +157,25 @@ export default class BinarySearchTreeNode {
     let parent = this.parent;
     let current = this;
     while (parent != null && current == parent.right) {
+      current = parent;
+      parent = parent.parent;
+    }
+
+    return parent;
+  }
+
+
+  get predecessor() {
+
+    // 1. if left subtree is non-empty find right most child of left side
+    if (this.left) {
+      return this.left.findMax();
+    }
+
+    // 2. if left subtree is empty, find first ancestor that current node is "on the right" to
+    let parent = this.parent;
+    let current = this;
+    while (parent != null && current == parent.left) {
       current = parent;
       parent = parent.parent;
     }
