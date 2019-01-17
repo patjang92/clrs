@@ -389,42 +389,48 @@ describe('LinkedList', () => {
 
   })
 
-  // it('should delete node at index', () => {
-  //   const list = new DoublyLinkedList();
-  //   const node1 = new DoublyLinkedListNode(1);
-  //   const node2 = new DoublyLinkedListNode(2);
-  //   const node3 = new DoublyLinkedListNode(3);
+  it('should delete node at index', () => {
+    const list = new DoublyLinkedList();
+    const node1 = new DoublyLinkedListNode(1);
+    const node2 = new DoublyLinkedListNode(2);
+    const node3 = new DoublyLinkedListNode(3);
 
-  //   // 1. delete from any index of empty node
-  //   list.deleteByIndex(0)
-  //   expect(list.head).toBeNull();
-  //   list.deleteByIndex(1)
-  //   expect(list.head).toBeNull();
+    // 1. delete from any index of empty node
+    list.deleteByIndex(0)
+    expect(list.head).toBeNull();
+    expect(list.tail).toBeNull();
+    list.deleteByIndex(1)
+    expect(list.head).toBeNull();
+    expect(list.tail).toBeNull();
 
-  //   // 2. delete from first index of single element list
-  //   list.insertNode(node1);
-  //   list.deleteByIndex(0);
-  //   expect(list.head).toBeNull();
+    // 2. delete from first index of single element list
+    list.insertNode(node1);
+    list.deleteByIndex(0);
+    expect(list.head).toBeNull();
+    expect(list.tail).toBeNull();
 
-  //   // 3. delete from out of bounds of single element list
-  //   list.insertNode(node1);
-  //   list.deleteByIndex(1);
-  //   expect(list.head).toEqual(node1);
+    // 3. delete from out of bounds of single element list
+    list.insertNode(node1);
+    list.deleteByIndex(1);
+    expect(list.head).toEqual(node1);
+    expect(list.tail).toEqual(node1);
 
-  //   // 4. delete tail index of multiple element list
-  //   list.insertNode(node2);
-  //   list.deleteByIndex(1);
-  //   expect(list.head).toEqual(node2);
-  //   expect(list.head.next).toBeNull();
+    // 4. delete tail index of multiple element list
+    list.insertNode(node2);
+    list.deleteByIndex(1);
+    expect(list.head).toEqual(node2);
+    expect(list.head.next).toBeNull();
+    expect(list.tail).toEqual(node2);
 
-  //   // 5. delete element in between head and tail of multiple element list
-  //   list.insertNode(node1);
-  //   list.insertNode(node3);
-  //   list.deleteByIndex(1);
-  //   expect(list.head).toEqual(node3);
-  //   expect(list.head.next).toEqual(node2);
-  //   expect(list.head.next.prev).toEqual(node3);
-  // })
+    // 5. delete element in between head and tail of multiple element list
+    list.insertNode(node1);
+    list.insertNode(node3);
+    list.deleteByIndex(1);
+    expect(list.head).toEqual(node3);
+    expect(list.head.next).toEqual(node2);
+    expect(list.head.next.prev).toEqual(node3);
+    expect(list.tail).toEqual(node2);
+  })
 
   // it('should return nth node from end', () => {
   //   const list = new DoublyLinkedList();

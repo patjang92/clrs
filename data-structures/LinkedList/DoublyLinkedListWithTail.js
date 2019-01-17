@@ -209,7 +209,49 @@ export default class DoublyLinkedList {
     c.next = n;
   }
 
-  deleteByIndex(index) {}
+  deleteByIndex(index) {
+    // 1. index < 0 || !this.head
+    if (index < 0 || !this.head) return;
+
+    // 2. index == 0
+    if (index == 0) {
+      // 2a. single element list
+      this.head = this.head.next;
+
+      // 2b. mult ele list
+      if (this.head) {
+        this.head.prev = null;
+      } 
+      
+      // make sure to update tail
+      else {
+        this.tail = null;
+      }
+
+      return;
+    }
+
+    // iterate to index == 1 && c.next != null
+    let c = this.head;
+    let distanceToIndex = index;
+
+    while (distanceToIndex > 1 && c.next != null) {
+      distanceToIndex--;
+      c = c.next;
+    }
+
+    if (distanceToIndex > 1 && c.next == null) return;
+
+    // if (c.next && c.next.next) update
+    if (c.next && c.next.next) {
+      c.next.next.prev = c;
+      c.next = c.next.next;
+    } else {
+      c.next = null;
+      this.tail = c;
+    }
+
+  }
 
   getNthNodeFromEnd(n) {}
 
