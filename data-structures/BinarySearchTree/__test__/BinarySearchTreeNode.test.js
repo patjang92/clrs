@@ -127,6 +127,79 @@ describe('BinarySearchTreeNode', () => {
     expect(a.search(14)).toEqual(g);
     expect(a.search(null)).toEqual(null);
     expect(a.search(2)).toEqual(null);
+  })
+
+  it('should find min', () => {
+    let a = new Node(8);
+    let b = new Node(3);
+    let c = new Node(10);
+    let d = new Node(1);
+    let e = new Node(6);
+    let f = new Node(9);
+    let g = new Node(14);
+
+    expect(a.findMin()).toEqual(a);
+
+    a.setLeft(b);
+    a.setRight(c);
+    b.setLeft(d);
+    b.setRight(e);
+    c.setLeft(f);
+    c.setRight(g);
+
+    expect(a.findMin()).toEqual(d);
+  })
+
+  it('should find max', () => {
+    let a = new Node(8);
+    let b = new Node(3);
+    let c = new Node(10);
+    let d = new Node(1);
+    let e = new Node(6);
+    let f = new Node(9);
+    let g = new Node(14);
+
+    expect(a.findMax()).toEqual(a);
+
+    a.setLeft(b);
+    a.setRight(c);
+    b.setLeft(d);
+    b.setRight(e);
+    c.setLeft(f);
+    c.setRight(g);
+
+    expect(a.findMax()).toEqual(g);
+  })
+
+  it('should find successor', () => {
+    let a = new Node(8);
+    let b = new Node(3);
+    let c = new Node(10);
+    let d = new Node(1);
+    let e = new Node(6);
+    let f = new Node(9);
+    let g = new Node(14);
+
+    expect(a.successor).toBeNull();
+
+    a.setLeft(b);
+    expect(a.successor).toBeNull();
+    expect(b.successor).toEqual(a);
+
+    a.setRight(c);
+    b.setLeft(d);
+    b.setRight(e);
+    c.setLeft(f);
+    c.setRight(g);
+
+    expect(a.successor).toEqual(f);
+    expect(b.successor).toEqual(e);
+    expect(c.successor).toEqual(g);
+    expect(d.successor).toEqual(b);
+    expect(e.successor).toEqual(a);
+    expect(f.successor).toEqual(c);
+    expect(g.successor).toBeNull();
+
 
   })
 })

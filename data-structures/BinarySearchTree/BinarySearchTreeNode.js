@@ -86,8 +86,10 @@ export default class BinarySearchTreeNode {
   }
 
   /**
+   * Search (Recursive)
    * 
    * @param {*} value 
+   * @returns {BinarySearchTreeNode}
    */
   search(value) {
     if (value == null) return null;
@@ -104,6 +106,62 @@ export default class BinarySearchTreeNode {
 
     return null;
   }
+
+  /**
+   * @returns {BinarySearchTreeNode}
+   */
+  findMin() {
+    if (!this.left) return this;
+    return this.left.findMin();
+  }  
+
+  /**
+   * @returns {BinarySearchTreeNode}
+   */
+  findMax() {
+    if (!this.right) return this;
+    return this.right.findMax();
+  }
+
+  /**
+   * Search (Iterative)
+   * 
+   * @param {*} value 
+   * @returns {BinarySearchTreeNode}
+   */
+  // search(value) {
+  //   let c = this;
+  //   while (c != null && c.value !== value) {
+  //     if (value < c.value) {
+  //       c = c.left;
+  //     } else if (value > c.value) {
+  //       c = c.right;
+  //     }
+  //   }
+  //   return c;
+  // }
+
+  /**
+   * @returns {BinarySearchTreeNode}
+   */
+  get successor() {
+
+    // 1. if right subtree is non-empty, find left most child of right side
+    if (this.right) {
+      return this.right.findMin();
+    }
+
+    // 2. if right subtree is empty, find first ancestor that current node is "on the left" to
+    let parent = this.parent;
+    let current = this;
+    while (parent != null && current == parent.right) {
+      current = parent;
+      parent = parent.parent;
+    }
+
+    return parent;
+  }
+
 
   /**
    * @return {*|array} 
