@@ -209,6 +209,11 @@ export default class DoublyLinkedList {
     c.next = n;
   }
 
+  /**
+   * Deletes node at index
+   * 
+   * @param {number} index 
+   */
   deleteByIndex(index) {
     // 1. index < 0 || !this.head
     if (index < 0 || !this.head) return;
@@ -253,7 +258,22 @@ export default class DoublyLinkedList {
 
   }
 
-  getNthNodeFromEnd(n) {}
+  /**
+   * Get nth node from end (n being index)
+   * 
+   * @param {number} n 
+   */
+  getNthNodeFromEnd(n) {
+    if (!this.tail) return null;
+
+    let c = this.tail;
+    let distanceToNode = n;
+    while (distanceToNode > 0 && c != null) {
+      distanceToNode--;
+      c = c.prev;
+    }
+    return c;
+  }
 
   reverse() {}
 }
