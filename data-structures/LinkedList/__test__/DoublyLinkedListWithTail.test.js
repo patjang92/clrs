@@ -443,53 +443,58 @@ describe('LinkedList', () => {
     expect(list.getNthNodeFromEnd(1)).toBeNull();
 
     // 2. return 0th node from single list
-    list.insertNode(node1);
+    list.insertNode(node1); // 1
     expect(list.getNthNodeFromEnd(0)).toEqual(node1);
 
     // 3. return 1st from last ndoe from single list (out of bounds)
     expect(list.getNthNodeFromEnd(1)).toBeNull();
 
     // 4. return 0th from last node from multiple node list
-    list.insertNode(node2);
+    list.insertNode(node2); // 2 - 1
     expect(list.getNthNodeFromEnd(0)).toEqual(node1);
 
     // 5. return length - 1 node from multiple node list
     expect(list.getNthNodeFromEnd(1)).toEqual(node2)
 
     // 6. return middle node from multiple node list
-    list.insertNode(node3);
+    list.insertNode(node3); // 3 - 2 - 1
     expect(list.getNthNodeFromEnd(1)).toEqual(node2);
   })
 
-  // it('should reverse list', () => {
-  //   const list = new DoublyLinkedList();
-  //   const node1 = new DoublyLinkedListNode(1);
-  //   const node2 = new DoublyLinkedListNode(2);
-  //   const node3 = new DoublyLinkedListNode(3);
+  it('should reverse list', () => {
+    const list = new DoublyLinkedList();
+    const node1 = new DoublyLinkedListNode(1);
+    const node2 = new DoublyLinkedListNode(2);
+    const node3 = new DoublyLinkedListNode(3);
 
-  //   // 1. list is empty
-  //   list.reverse();
-  //   expect(list.head).toBeNull();
+    // 1. list is empty
+    list.reverse();
+    expect(list.head).toBeNull();
+    expect(list.tail).toBeNull();
 
-  //   // 2. list has 1 element
-  //   list.insertNode(node1);
-  //   list.reverse();
-  //   expect(list.head).toEqual(node1);
+    // 2. list has 1 element
+    list.insertNode(node1);
+    list.reverse();
+    expect(list.head).toEqual(node1);
+    expect(list.tail).toEqual(node1);
 
-  //   // 3. list has more than 1 element
-  //   list.insertNode(node2) // 2 - 1
-  //   list.reverse() // 1 - 2
-  //   expect(list.head).toEqual(node1);
-  //   expect(list.head.next).toEqual(node2);
-  //   expect(list.head.next.prev).toEqual(node1);
+    // 3. list has more than 1 element
+    list.insertNode(node2) // 2 - 1
+    list.reverse() // 1 - 2
+    expect(list.head).toEqual(node1);
+    expect(list.head.next).toEqual(node2);
+    expect(list.head.next.prev).toEqual(node1);
+    expect(list.tail).toEqual(node2);
 
-  //   list.insertNode(node3); // 3 - 1 - 2
-  //   list.reverse(); // 2 - 1 - 3
-  //   expect(list.head).toEqual(node2);
-  //   expect(list.head.next).toEqual(node1);
-  //   expect(list.head.next.prev).toEqual(node2);
-  //   expect(list.head.next.next).toEqual(node3);    
-  //   expect(list.head.next.next.prev).toEqual(node1);
-  // })
+    list.insertNode(node3); // 3 - 1 - 2
+    list.reverse(); // 2 - 1 - 3
+    expect(list.head).toEqual(node2);
+    expect(list.head.next).toEqual(node1);
+    expect(list.head.next.prev).toEqual(node2);
+    expect(list.head.next.next).toEqual(node3);    
+    expect(list.head.next.next.prev).toEqual(node1);
+    expect(list.tail).toEqual(node3);
+
+  })
 
 });

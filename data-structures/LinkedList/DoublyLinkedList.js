@@ -281,6 +281,9 @@ export default class DoublyLinkedList {
     return c;
   }
 
+  /**
+   * Reverses nodes in list
+   */
   reverse() {
     // 1. no list or single element
     if (!this.head || !this.head.next) return;

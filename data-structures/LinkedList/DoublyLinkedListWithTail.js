@@ -275,5 +275,25 @@ export default class DoublyLinkedList {
     return c;
   }
 
-  reverse() {}
+  /**
+   * Reverses nodes in list
+   */
+  reverse() {
+    if (!this.head || this.head == this.tail) return;
+
+    let c = this.head;
+    let prev = null;
+    let next = null;
+
+    this.tail = this.head;
+    while (c != null) {
+      next = c.next;
+      c.next = prev;
+      c.prev = next;
+      prev = c;
+      c = next;
+    }
+
+    this.head = prev;
+  }
 }
