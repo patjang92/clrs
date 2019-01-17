@@ -165,6 +165,8 @@ export default class LinkedListWithTail {
   }
 
   /**
+   * Insert node at Index
+   * O(n)
    * 
    * @param {number} index: max possible value is length of list (append at end) 
    */
@@ -210,6 +212,7 @@ export default class LinkedListWithTail {
 
   /**
    * Deletes node at index
+   * O(n)
    * 
    * @param {number} index 
    */
@@ -252,6 +255,12 @@ export default class LinkedListWithTail {
     return;
   }
 
+  /**
+   * Get nth node from end (n being index)
+   * O(n)
+   * 
+   * @param {number} n 
+   */
   getNthNodeFromEnd(n) {
     // if empty return null
     if (!this.head) return null;
@@ -276,7 +285,9 @@ export default class LinkedListWithTail {
 
     return currentNode;
   }
-
+  /**
+   * Reverses nodes in list
+   */
   reverse() {
     // if empty or single element do nthing
     if (!this.head || this.head == this.tail) return;

@@ -152,6 +152,7 @@ export default class DoublyLinkedList {
 
   /**
    * Inserts node into index
+   * O(n)
    * 
    * @param {number} index 
    * @param {LinkedListNode} node 
@@ -211,6 +212,7 @@ export default class DoublyLinkedList {
 
   /**
    * Deletes node at index
+   * O(n)
    * 
    * @param {number} index 
    */
@@ -255,11 +257,11 @@ export default class DoublyLinkedList {
       c.next = null;
       this.tail = c;
     }
-
   }
 
   /**
    * Get nth node from end (n being index)
+   * O(n) but don't need to find length
    * 
    * @param {number} n 
    */
@@ -285,11 +287,12 @@ export default class DoublyLinkedList {
     let prev = null;
     let next = null;
 
-    this.tail = this.head;
+    this.tail = this.head; // if tail
+
     while (c != null) {
       next = c.next;
       c.next = prev;
-      c.prev = next;
+      c.prev = next; // if prev
       prev = c;
       c = next;
     }

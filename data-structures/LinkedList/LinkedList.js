@@ -144,6 +144,7 @@ export default class LinkedList {
 
   /**
    * Inserts node into index
+   * O(n)
    * 
    * @param {number} index 
    * @param {LinkedListNode} node 
@@ -181,6 +182,7 @@ export default class LinkedList {
 
   /**
    * Deletes node at index
+   * O(n)
    * 
    * @param {number} index 
    */
@@ -215,6 +217,7 @@ export default class LinkedList {
 
   /**
    * Get nth node from end (n being index)
+   * O(n)
    * 
    * @param {number} n 
    */

@@ -153,6 +153,7 @@ export default class DoublyLinkedList {
 
   /**
    * Inserts node into index
+   * O(n)
    * 
    * @param {number} index 
    * @param {LinkedListNode} node 
@@ -208,6 +209,7 @@ export default class DoublyLinkedList {
   
   /**
    * Deletes node at index
+   * O(n)
    * 
    * @param {number} index 
    */
