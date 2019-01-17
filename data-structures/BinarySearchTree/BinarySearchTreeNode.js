@@ -66,6 +66,21 @@ export default class BinarySearchTreeNode {
     return this;
   }
 
+
+  removeChild(n) {
+    if (this.left && this.left == n) {
+      this.left = null;
+      return true;
+    }
+
+    if (this.right && this.right == n) {
+      this.right = null;
+      return true;
+    }
+
+    return false;
+  }
+
   /**
    * @return {*|array} 
    */

@@ -81,4 +81,24 @@ describe('BinarySearchTreeNode', () => {
 
     expect(a.postOrderTraversal()).toEqual([4, 5, 2, 6, 7, 3, 1])
   })
+
+  it('should remove child', () => {
+    let a = new Node(1);
+    let b = new Node(2);
+    let c = new Node(3);
+    let d = new Node(4);
+
+    a.setLeft(b);
+    a.setRight(c);
+
+    a.removeChild(b);
+    expect(a.left).toBeNull();
+    
+    a.removeChild(d);
+    expect(a.right).toEqual(c);
+    expect(a.left).toBeNull();
+    
+    a.removeChild(c);
+    expect(a.right).toBeNull();
+  })
 })
