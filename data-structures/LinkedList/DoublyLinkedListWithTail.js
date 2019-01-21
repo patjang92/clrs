@@ -247,15 +247,13 @@ export default class DoublyLinkedList {
       c = c.next;
     }
 
-    if (distanceToIndex > 1 && c.next == null) return;
+    if (distanceToIndex >= 1 && c.next == null) return;
 
-    // if (c.next && c.next.next) update
-    if (c.next && c.next.next) {
-      c.next.next.prev = c;
-      c.next = c.next.next;
+    c.next = c.next.next;
+    if (c.next) {
+      c.next.prev = c;
     } else {
-      c.next = null;
-      this.tail = c;
+      this.tail = c
     }
   }
 

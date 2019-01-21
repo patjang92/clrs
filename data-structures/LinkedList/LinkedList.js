@@ -203,16 +203,13 @@ export default class LinkedList {
     } 
 
     // out of bounds
-    if (index > 1 && currentNode.next == null) {
+    if (index >= 1 && currentNode.next == null) {
       return;
     }
 
-    if (currentNode.next) {
-      currentNode.next = currentNode.next.next;
-    } else {
-      currentNode.next = null;
-    }
-    // currentNode.next = currentNode.next.next;
+    currentNode.next = currentNode.next.next;
+
+    return;
   }
 
   /**

@@ -56,6 +56,35 @@ export default class BinarySearchTreeNode {
   }
 
   /**
+   * @return {number}
+   */
+  get leftHeight() {
+    if (!this.left) {
+      return 0;
+    }
+
+    return this.left.height + 1;
+  }
+
+  /**
+   * @return {number}
+   */
+  get rightHeight() {
+    if (!this.right) {
+      return 0;
+    }
+
+    return this.right.height + 1;
+  }
+
+  /**
+   * @return {number}
+   */
+  get height() {
+    return Math.max(this.leftHeight, this.rightHeight);
+  }
+
+  /**
    * 
    * @param {*} value 
    * @return {BinarySearchTreeNode}
@@ -79,6 +108,29 @@ export default class BinarySearchTreeNode {
 
     if (this.right && this.right == n) {
       this.right = null;
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
+   * @param {BinaryTreeNode} nodeToReplace
+   * @param {BinaryTreeNode} replacementNode
+   * @return {boolean}
+   */
+  replaceChild(nodeToReplace, replacementNode) {
+    if (!nodeToReplace || !replacementNode) {
+      return false;
+    }
+
+    if (this.left && this.left == nodeToReplace) {
+      this.left = replacementNode;
+      return true;
+    }
+
+    if (this.right && this.right == nodeToReplace) {
+      this.right = replacementNode;
       return true;
     }
 
@@ -147,7 +199,6 @@ export default class BinarySearchTreeNode {
    * @returns {BinarySearchTreeNode}
    */
   get successor() {
-
     // 1. if right subtree is non-empty, find left most child of right side
     if (this.right) {
       return this.right.findMin();
@@ -164,9 +215,12 @@ export default class BinarySearchTreeNode {
     return parent;
   }
 
-
+  /**
+   * Get in-order predecessor
+   * 
+   * @returns {BinarySearchTreeNode}
+   */
   get predecessor() {
-
     // 1. if left subtree is non-empty find right most child of left side
     if (this.left) {
       return this.left.findMax();
@@ -183,6 +237,96 @@ export default class BinarySearchTreeNode {
     return parent;
   }
 
+  /**
+   * Insert node
+   * 
+   * @param {*} n
+   * @returns {BinarySearchTreeNode} 
+   */
+  insert(n) {
+    // 1. if n.value == this.value, no duplicates
+    if (!this.value) {
+      this.setValue(n);
+      return this;
+    }
+
+    // 2. if less, go or set left
+    if (n < this.value) {
+      if (this.left) {
+        return this.left.insert(n);
+      }
+
+      this.setLeft(new BinarySearchTreeNode(n));
+      return this.left;
+    }
+    
+    // 3. if greater, go or set right
+    if (n > this.value) {
+      if (this.right) {
+        return this.right.insert(n);
+      }
+      this.setRight(new BinarySearchTreeNode(n));
+      return this.right;
+    }
+
+    return this;
+  }
+
+  /**
+   * 
+   * @param {*} x value to be deleted
+   * @returns {boolean} if value x was successfully deleted
+   */
+  delete(x) {
+    const nodeToDelete = this.search(x);
+    
+    if (!nodeToDelete) return false;
+
+    const { parent } = nodeToDelete;
+
+    // 1. no children
+    if (!nodeToDelete.left && !nodeToDelete.right) {
+      // 1a. has parent - just remove child from parent
+      if (parent) {
+        parent.removeChild(nodeToDelete);
+
+      // 1b. no parent / is root, set value to undefined      
+      } else {
+        nodeToDelete.setValue(undefined)
+      }
+
+    // 2. has both children    
+    } else if (nodeToDelete.left && nodeToDelete.right) {
+      
+      // find successor on right subtree
+      const rightSuccessor = nodeToDelete.right.findMin();
+
+      // 2a. if rightSuccessor != right child, replace with rightSuccessor value
+      // call delete on rightSuccessor to rearrange subtrees
+      if (rightSuccessor != nodeToDelete.right) {
+        // rightSuccessor will not have left child, reduce to easier case
+        this.delete(rightSuccessor.value);
+        nodeToDelete.setValue(rightSuccessor.value);
+      // 2b. if rightSuccessor == right child, replace with right child to save time
+      } else {
+        // don't need to setLeft as it will not have a left child
+        nodeToDelete.setValue(nodeToDelete.right.value);
+        nodeToDelete.setRight(nodeToDelete.right.right)  
+      }    
+    // 3. has one child, replace nodeToDelete with child and update parent
+    } else {
+      const childNode = nodeToDelete.left || nodeToDelete.right;
+
+      if (parent) {
+        parent.replaceChild(nodeToDelete, childNode);
+      } else {
+        BinarySearchTreeNode.copyNode(childNode, nodeToDelete)
+      }
+    }
+
+    nodeToDelete.parent = null;
+    return true;
+  }
 
   /**
    * @return {*|array} 
@@ -194,7 +338,7 @@ export default class BinarySearchTreeNode {
       order = order.concat(this.left.inOrderTraversal());
     }
 
-    order.push(this.value);
+    if (this.value) order.push(this.value);
 
     if (this.right) {
       order = order.concat(this.right.inOrderTraversal());
@@ -206,7 +350,7 @@ export default class BinarySearchTreeNode {
   preOrderTraversal() {
     let order = [];
 
-    order.push(this.value);
+    if (this.value) order.push(this.value);
 
     if (this.left) {
       order = order.concat(this.left.preOrderTraversal());
@@ -230,11 +374,16 @@ export default class BinarySearchTreeNode {
       order = order.concat(this.right.postOrderTraversal());
     }
 
-    order.push(this.value);
+    if (this.value) order.push(this.value);
 
     return order;
   }
 
+  static copyNode(sourceNode, targetNode) {
+    targetNode.setValue(sourceNode.value);
+    targetNode.setLeft(sourceNode.left);
+    targetNode.setRight(sourceNode.right);
+  }
 
 
 }

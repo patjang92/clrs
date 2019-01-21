@@ -237,17 +237,13 @@ export default class DoublyLinkedList {
       c = c.next;
     }
 
-    // if distance > 1 && c.next == null, out of bounds
-    if (distanceToIndex > 1 && c.next == null) return;
+    // if distance >= 1 && c.next == null, out of bounds
+    if (distanceToIndex >= 1 && c.next == null) return;
 
-    // 4. delete and update if not tail
-    if (c.next && c.next.next) {
-      c.next.next.prev = c;
-      c.next = c.next.next;
-    } 
-    // 5. is tail
-    else {
-      c.next = null;
+    // 4. delete and update
+    c.next = c.next.next;
+    if (c.next) {
+      c.next.prev = c;
     }
   }
 

@@ -230,4 +230,148 @@ describe('BinarySearchTreeNode', () => {
     expect(f.predecessor).toEqual(a);
     expect(g.predecessor).toEqual(c);
   })
+
+  it('should insert nodes in correct order', () => {
+    const root = new Node(2);
+    const node1 = root.insert(1);
+    expect(node1.value).toBe(1);
+    expect(root.left).toEqual(node1);
+
+    const node2 = root.insert(3);
+    expect(node2.value).toBe(3);
+    expect(root.right).toEqual(node2);
+
+    const node3 = root.insert(7);
+    expect(node3.value).toBe(7);
+    expect(root.right.right).toEqual(node3);
+
+    const node4 = root.insert(4);
+    expect(node4.value).toBe(4);
+    expect(root.right.right.left).toEqual(node4);
+
+    const node5 = root.insert(6);
+    expect(node5.value).toBe(6);
+    expect(root.right.right.left.right).toEqual(node5);
+  });
+
+  it('should not insert duplicates', () => {
+    const root = new Node(2);
+    const node1 = root.insert(1);
+    expect(node1.value).toBe(1);
+    expect(root.left).toEqual(node1);
+
+    const node2 = root.insert(1);
+    expect(node2).toEqual(node1);
+    expect(root.right).toBeNull();
+    expect(root.left).toEqual(node1);
+    expect(root.left.left).toBeNull();
+    expect(root.left.right).toBeNull();
+  });
+
+  it('should remove leaf nodes', () => {
+    const root = new Node();
+
+    const node1 = root.insert(10);
+    const node2 = root.insert(20);
+    const node3 = root.insert(5);
+
+    expect(root).toEqual(node1);
+    expect(root.left).toEqual(node3);
+    expect(root.right).toEqual(node2);
+
+    const removed1 = root.delete(5);
+    expect(root).toEqual(node1);
+    expect(root.left).toBeNull();
+    expect(root.right).toEqual(node2);
+    expect(removed1).toBe(true);
+
+    const removed2 = root.delete(20);
+    expect(root).toEqual(node1);
+    expect(root.left).toBeNull();
+    expect(root.right).toBeNull();
+    expect(removed2).toBe(true);
+  });
+
+  it('should remove nodes with one child', () => {
+    const root = new Node();
+
+    const node1 = root.insert(10);
+    const node2 = root.insert(20);
+    const node3 = root.insert(5);
+    const node4 = root.insert(30);
+
+    expect(root).toEqual(node1);
+    expect(root.left).toEqual(node3);
+    expect(root.right).toEqual(node2);
+    expect(root.right.right).toEqual(node4);
+
+    const removed1 = root.delete(20);
+    expect(root).toEqual(node1);
+    expect(root.left).toEqual(node3);
+    expect(root.right).toEqual(node4);
+    expect(removed1).toBe(true);
+    // expect(bstRootNode.toString()).toBe('5,10,30');
+
+    const node5 = root.insert(1);
+    expect(root).toEqual(node1);
+    expect(root.left).toEqual(node3);
+    expect(root.left.left).toEqual(node5);
+    expect(root.right).toEqual(node4);
+    // expect(bstRootNode.toString()).toBe('1,5,10,30');
+
+    const removed2 = root.delete(5);
+    expect(root).toEqual(node1);
+    expect(root.left).toEqual(node5);
+    // expect(root.left.left).toEqual(node5);
+    expect(root.right).toEqual(node4);
+    expect(removed2).toBe(true);
+    // expect(bstRootNode.toString()).toBe('1,10,30');
+  });
+
+  it('should remove nodes with two children', () => {
+    const root = new Node();
+
+    root.insert(10);
+    root.insert(20);
+    root.insert(5);
+    root.insert(30);
+    root.insert(15);
+    root.insert(25);
+
+    expect(root.inOrderTraversal()).toEqual([5,10,15,20,25,30]);
+    expect(root.search(20).left.value).toBe(15);
+    expect(root.search(20).right.value).toBe(30);
+
+    root.delete(20);
+    expect(root.inOrderTraversal()).toEqual([5,10,15,25,30]);
+
+    root.delete(15);
+    expect(root.inOrderTraversal()).toEqual([5,10,25,30]);
+
+    root.delete(10);
+    expect(root.inOrderTraversal()).toEqual([5,25,30]);
+    expect(root.value).toBe(25);
+
+    root.delete(25);
+    expect(root.inOrderTraversal()).toEqual([5,30]);
+
+    root.delete(5);
+    expect(root.inOrderTraversal()).toEqual([30]);
+  });
+
+  it('should remove node with no parent', () => {
+    const root = new Node();
+    expect(root.value).toBeNull();
+
+    root.insert(1);
+    root.insert(2);
+    expect(root.inOrderTraversal()).toEqual([1,2]);
+
+    root.delete(1);
+    expect(root.inOrderTraversal()).toEqual([2]);
+
+    root.delete(2);
+    expect(root.inOrderTraversal()).toEqual([]);
+  });
+
 })

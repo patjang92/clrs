@@ -241,17 +241,13 @@ export default class LinkedListWithTail {
     }
 
     // if node.next before distance == 1, then out of bounds
-    if (currentNode.next == null && distanceToIndex > 1) return;
+    if (currentNode.next == null && distanceToIndex >= 1) return;
 
-    // if next != null, update next to next.next
-    if (currentNode.next != null) {
-      // update tail
-
-      if (currentNode.next == this.tail) {
-        this.tail = currentNode;
-      }
-      currentNode.next = currentNode.next.next;
+    currentNode.next = currentNode.next.next;
+    if (!currentNode.next) {
+      this.tail = currentNode;
     }
+    
     return;
   }
 
