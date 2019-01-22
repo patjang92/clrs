@@ -1,5 +1,7 @@
 /**
  * Find optimal matrix multiplication chain order (parenthesize)
+ * Runtime: O(n^3)
+ * Space: O(n^2)
  * 
  * @param {number | array} dimensions
  * Matrix A[i] is dimensions[i-1] x dimensions[i]
@@ -7,15 +9,12 @@
  */
 export function matrixChainOrder(dimensions) {
 
-  debugger;
   // get number of matrices
   // first matrix is at index A[1]
   const numMatrices = dimensions.length - 1;
 
   // for mult matrices A[i..j], minOps[i][j] holds the min number of mult operations
   // minOps range = [1..n][1..n]
-  // const minOps = Array(numMatrices + 1).fill(Array(numMatrices + 1))
-  // const minOps = Array(numMatrices + 1).fill([])
   let minOps = [];
   for (let i = 0; i <= numMatrices; i++) {
     minOps[i] = [];
@@ -24,8 +23,6 @@ export function matrixChainOrder(dimensions) {
   // for mult matrices A[i..j], bestSplit[i][j] is ideal parenthesis split location s.t. 
   // i <= split < j and A[i..split] * A[split+1, j] require the least computation
   // split range = [1..n-1, 2..n]
-  // const bestSplit = Array(numMatrices + 1).fill(Array(numMatrices + 1));
-  // const bestSplit = Array(numMatrices + 1).fill([]);
   let bestSplit = [];
   for (let i = 0; i <= numMatrices; i++) {
     bestSplit[i] = [];
@@ -72,8 +69,6 @@ export function matrixChainOrder(dimensions) {
       }
     }
   }
-  console.log("minOps = ", minOps);
-  console.log("bestSplit = ", bestSplit);
 
   return printOptimalParens(bestSplit, 1, numMatrices);
 }
