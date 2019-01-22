@@ -2,6 +2,7 @@
  * 
  * @param {number|Array} prices 
  * @param {number} length 
+ * Runtime: O(n^2)
  * 
  * @returns {number} revenue
  * @returns {number|Array} firstCuts
