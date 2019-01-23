@@ -1,3 +1,11 @@
+/**
+ * Finds longest subsequence in X and Y
+ * Runtime: O(m*n) where m = X.length and n = Y.length
+ * Space: O(2m*n) for table
+ * 
+ * @param {*} X 
+ * @param {*} Y 
+ */
 export default function lcsLength(X, Y) {
 
   // for X[i] and Y[j], lcsCount stores lcs length so far in lcsCount[i+1][j+1]
@@ -41,6 +49,17 @@ export default function lcsLength(X, Y) {
   return printLCS(lcsPath, X, X.length, Y.length);
 }
 
+/**
+ * 
+ * Prints sequence
+ * Runtime: O(i + j), or O(m + n) where m is X.length and n = Y.length
+ * Space: O(i + j) 
+ * 
+ * @param {*} lcsPath 
+ * @param {*} X 
+ * @param {*} i 
+ * @param {*} j 
+ */
 function printLCS(lcsPath, X, i, j) {
   if (i == 0 || j == 0) return "";
   let lcs = "";
