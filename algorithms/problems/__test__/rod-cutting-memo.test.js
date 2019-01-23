@@ -1,5 +1,5 @@
 // import cutRod from '../rod-cutting';
-import { cutRod, calculateCutRod } from '../rod-cutting';
+import { cutRod, calculateCutRod } from '../rod-cutting-memo';
 
 describe('Rod Cutting', () => {
 
@@ -8,15 +8,6 @@ describe('Rod Cutting', () => {
   // beforeAll(() => {
   //   prices = [0, 1, 5, 8, 9, 10, 17, 17, 20, 24, 30];
   // })
-
-  it('should generate correct revenues and firstCuts arrays', () => {
-    // expect(prices).toEqual([0, 1, 5, 8, 9, 10, 17, 17, 20, 24, 30])
-    const { revenues, firstCuts } = calculateCutRod(prices, 10);
-    // const obj = calculateCutRod(prices, 10);
-    // console.log("obj = ", obj);
-    expect(revenues).toEqual([0, 1, 5, 8, 10, 13, 17, 18, 22, 25, 30]);
-    expect(firstCuts).toEqual([0, 1, 2, 3, 2, 2, 6, 1, 2, 3, 10]);
-  })
 
   it('should return 0 for length 0', () => {
     const { revenue, cuts } = cutRod(prices, 0);

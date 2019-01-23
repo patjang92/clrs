@@ -15,4 +15,18 @@ describe('longest common subsequence', () => {
     const lcs = getLCS(X, Y);
     expect(lcs).toEqual("BCBA");
   })
+
+  it('', () => {
+    let X = [ 'A', 'B', 'C', 'D' ];
+    let Y = [ 'B', 'D' ];
+    const lcs = getLCS(X, Y);
+    expect(lcs).toEqual("BD");
+  })
+
+  it('', () => {
+    let X = [ 'S', 'T', 'O', 'N', 'E' ];
+    let Y = [ 'L', 'O', 'N', 'G', 'E', 'S', 'T' ];
+    const lcs = getLCS(X, Y);
+    expect(lcs).toEqual("ONE");
+  })
 })
