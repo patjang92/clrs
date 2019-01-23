@@ -38,9 +38,6 @@ export default function lcsLength(X, Y) {
     }
   }
 
-  // return { lcsCount, lcsPath }
-  console.log("lcsCount = ", lcsCount);
-  console.log("lcsPath = ", lcsPath);
   return printLCS(lcsPath, X, X.length, Y.length);
 }
 
@@ -57,6 +54,5 @@ function printLCS(lcsPath, X, i, j) {
     lcs = `${lcs}${printLCS(lcsPath, X, i, j-1)}`;
   }
 
-  console.log("lcs = ", lcs);
   return lcs;
 }
