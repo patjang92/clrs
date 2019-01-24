@@ -28,33 +28,31 @@ export function matrixChainOrder(dimensions) {
     bestSplit[i] = [];
   }
 
-  // compute base case where mult A[i..i] is just 1 matrix, costs 0 operations
+  // initialize all to Infinity (haven't been solved yet and working from top to bottom)
   for (let i = 1; i <= numMatrices; i++) {
-    // minOps[i][i] = 0;
     for (let j = 1; j <= numMatrices; j++) {
       minOps[i][j] = Infinity;
     }
   }
 
   matrixChainOrderAux(minOps, bestSplit, dimensions, 1, numMatrices);
-
-  // start from largest chain and solve for subproblems
-  // for (let chainLength = numMatrices; chainLength >= 2; chainLength--) {
-  //   for (let start = 1; start <= numMatrices - chainLength + 1; start++) {
-  //     let end = start + chainLength - 1;
-  //   }
-  // }
-
   return printOptimalParens(bestSplit, 1, numMatrices);
 }
 
 function matrixChainOrderAux(minOps, bestSplit, dimensions, start, end) {
+
+  // if solved, return solved value;
   if (minOps[start][end] < Infinity) return minOps[start][end]; 
+
+  // base case if start == end, 0 operations are needed (just one matrix)
   else if (start == end) {
     minOps[start][end] = 0;
-    // bestSplit[start][end] = start;
     return 0;
   }
+
+  // otherwise, iterate through all possible splits between start and end-1
+  // recursively calculate op count from A[start, split] and A[split+1, end] + dimensions
+  // store lowest opCount and update minOps[start][end] and bestSplit[start][end] at the end
   else {
     let minOpCount = Infinity;
     let idealSplit = start;
