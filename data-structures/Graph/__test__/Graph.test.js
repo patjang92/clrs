@@ -129,7 +129,28 @@ describe('Graph', () => {
     ];
 
     expect(g.adjMatrix).toEqual(mockMatrix);
+  })
 
+  it('can do breadth first search traversal', () => {
+    let g = new Graph();
+    g.addVertex('A');
+    g.addVertex('B');
+    g.addVertex('C');
+    g.addVertex('D');
+    g.addVertex('E');
+    g.addEdge('A', 'B');
+    g.addEdge('A', 'C');
+    g.addEdge('B', 'C');
+    g.addEdge('C', 'D');
+    g.addEdge('D', 'E');
+
+    let traversal = [];
+    g.bfsTraversal('A', (v) => traversal.push(v));
+    expect(traversal).toEqual(['A', 'B', 'C', 'D', 'E']);
+
+    traversal = [];
+    g.bfsTraversal('D', (v) => traversal.push(v));
+    expect(traversal).toEqual(['D', 'C', 'E', 'A', 'B']);
   })
 
 })

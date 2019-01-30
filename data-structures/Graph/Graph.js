@@ -22,7 +22,6 @@ export default class Graph {
 
   addEdge(v, u) {
     const vertices = this.getVertices();
-    console.log('vertices :', vertices);
 
     if (!vertices.includes(v) || !vertices.includes(u)) {
       throw new Error("Vertex does not exist");
@@ -95,9 +94,9 @@ export default class Graph {
     return Array.from(this.adjList[v]);
   }
 
-  bfsTraversal(start, dest) {
+  bfsTraversal(start, callback) {
     const vertices = this.getVertices();
-    if (!vertices.includes(s)) return;
+    if (!vertices.includes(start)) return;
 
     // enum
     const Status = Object.freeze({ UNVISITED: "unvisited", VISITING: "visited", VISITED: "visited" });
@@ -122,7 +121,8 @@ export default class Graph {
 
     while (!vertexQueue.isEmpty()) {
       let u = vertexQueue.dequeue();
-      if (u == dest) return { node: u, distance: distances[u], parent: parents[u] };
+      // if (u == dest) return { node: u, distance: distances[u], parent: parents[u] };
+      callback(u);
 
 
       this.getEdges(u).forEach(v => {
