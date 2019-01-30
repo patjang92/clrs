@@ -16,75 +16,90 @@ export default class Graph {
   }
 
   addVertex(v) {
-    if (this.vertices.includes(v)) return false;
-    this.vertices.push(v);
+    if (this.getVertices().includes(v)) return false;
     this.adjList[v] = new Set();
   }
 
   addEdge(v, u) {
-    if (!this.vertices.includes(v) || !this.vertices.includes(u)) {
+    const vertices = this.getVertices();
+    console.log('vertices :', vertices);
+
+    if (!vertices.includes(v) || !vertices.includes(u)) {
       throw new Error("Vertex does not exist");
     }
 
-    this.adjList[v].add(u);
+    this.getEdges(v).add(u);
 
     if (!this.directed) {
-      this.adjList[u].add(v);
+      this.getEdges(u).add(v);
     } 
 
     return true;
   }
 
   removeVertex(v) {
-    const index = this.vertices.indexOf(v);
+    let vertices = this.getVertices();
+    const index = vertices.indexOf(v);
     if (index < 0) return false;
 
-    this.vertices.splice(index, 1);
+    delete this.adjList[v];    
 
-    Object.values(this.adjList).forEach(vertices => {
-      vertices.delete(v);
+    Object.values(this.adjList).forEach(edges => {
+      edges.delete(v);
     })
-
-    delete this.adjList[v];
 
     return true;
   }
 
   removeEdge(v, u) {
-    if (!this.vertices.includes(v) || !this.vertices.includes(u)) {
+    const vertices = this.getVertices();
+
+    if (!vertices.includes(v) || !vertices.includes(u)) {
       throw new Error("Vertex does not exist");
     }
     
-    this.adjList[v].delete(u);
+    this.getEdges(v).delete(u);
 
     if (!this.directed) {
-      this.adjList[u].delete(v);
+      this.getEdges(u).delete(v);
     }
 
     return true;
   }
 
   get adjMatrix() {
-    const numVertices = this.vertices.length;
+    const vertices = this.getVertices();
+    const numVertices = vertices.length;
     let matrix = new Array(numVertices).fill(0).map(() => new Array(numVertices).fill(0));
     
-    this.vertices.forEach((v, i) => {
-      this.adjList[v].forEach(u => {
-        matrix[i][this.vertices.indexOf(u)] = 1;
+    vertices.forEach((v, i) => {
+      this.getEdges(v).forEach(u => {
+        matrix[i][vertices.indexOf(u)] = 1;
       }) 
     })
 
     return matrix;
   }
 
+  getVertices() {
+    return Object.keys(this.adjList);
+  }
+
   getEdges(v) {
-    if (!this.vertices.includes(v)) throw new Error("Vertex does not exist");
+    if (!this.getVertices().includes(v)) throw new Error("Vertex does not exist");
+    return this.adjList[v];
+  }
+
+  getEdgesArray(v) {
+    if (!this.getVertices().includes(v)) throw new Error("Vertex does not exist");
     return Array.from(this.adjList[v]);
   }
 
-  bfsSearch(start, dest) {
-    if (!this.vertices.includes(s)) return;
+  bfsTraversal(start, dest) {
+    const vertices = this.getVertices();
+    if (!vertices.includes(s)) return;
 
+    // enum
     const Status = Object.freeze({ UNVISITED: "unvisited", VISITING: "visited", VISITED: "visited" });
 
     const visitStatuses = {};
@@ -93,7 +108,7 @@ export default class Graph {
 
     let vertexQueue = new Queue();
 
-    this.vertices.forEach(v => { 
+    vertices.forEach(v => { 
       visitStatuses[v] = Status.UNVISITED;
       distances[v] = Infinity;
       parents[v] = null;

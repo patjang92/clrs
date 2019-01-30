@@ -4,18 +4,18 @@ describe('Graph', () => {
 
   it('can add vertices', () => {
     let g = new Graph();
-    expect(g.vertices).toEqual([]);
+    expect(g.getVertices()).toEqual([]);
 
     g.addVertex('A');
-    expect(g.vertices).toEqual(['A']);
+    expect(g.getVertices()).toEqual(['A']);
     expect(g.adjList).toEqual({ 'A' : new Set() });
 
     g.addVertex('A');
-    expect(g.vertices).toEqual(['A']);
+    expect(g.getVertices()).toEqual(['A']);
     expect(g.adjList).toEqual({ 'A' : new Set() })
 
     g.addVertex('B');
-    expect(g.vertices).toEqual(['A', 'B']);
+    expect(g.getVertices()).toEqual(['A', 'B']);
     expect(g.adjList).toEqual({ 'A' : new Set(), 'B': new Set() })
   })
 
@@ -25,18 +25,18 @@ describe('Graph', () => {
     g.addVertex('B');
     g.addEdge('A', 'B');
 
-    expect(g.adjList['A'].has('B')).toBe(true);
-    expect(g.adjList['B'].has('A')).toBe(true);
+    expect(g.getEdges('A').has('B')).toBe(true);
+    expect(g.getEdges('B').has('A')).toBe(true);
 
     g.addEdge('A', 'B');
-    expect(g.adjList['A'].has('B')).toBe(true);
-    expect(g.adjList['B'].has('A')).toBe(true);
+    expect(g.getEdges('A').has('B')).toBe(true);
+    expect(g.getEdges('B').has('A')).toBe(true);
 
     g.addVertex('C');
     g.addEdge('A', 'C');
-    expect(g.adjList['A'].has('B')).toBe(true);
-    expect(g.adjList['A'].has('C')).toBe(true);
-    expect(g.adjList['C'].has('A')).toBe(true);
+    expect(g.getEdges('A').has('B')).toBe(true);
+    expect(g.getEdges('A').has('C')).toBe(true);
+    expect(g.getEdges('C').has('A')).toBe(true);
   })
 
 
@@ -46,18 +46,18 @@ describe('Graph', () => {
     g.addVertex('B');
     g.addEdge('A', 'B');
 
-    expect(g.adjList['A'].has('B')).toBe(true);
-    expect(g.adjList['B'].has('A')).toBe(false);
+    expect(g.getEdges('A').has('B')).toBe(true);
+    expect(g.getEdges('B').has('A')).toBe(false);
 
     g.addEdge('A', 'B');
-    expect(g.adjList['A'].has('B')).toBe(true);
-    expect(g.adjList['B'].has('A')).toBe(false);
+    expect(g.getEdges('A').has('B')).toBe(true);
+    expect(g.getEdges('B').has('A')).toBe(false);
 
     g.addVertex('C');
     g.addEdge('A', 'C');
-    expect(g.adjList['A'].has('B')).toBe(true);
-    expect(g.adjList['A'].has('C')).toBe(true);
-    expect(g.adjList['C'].has('A')).toBe(false);
+    expect(g.getEdges('A').has('B')).toBe(true);
+    expect(g.getEdges('A').has('C')).toBe(true);
+    expect(g.getEdges('C').has('A')).toBe(false);
   })
 
   it('can remove edges for undirected graph', () => {
@@ -69,13 +69,13 @@ describe('Graph', () => {
     g.addEdge('A', 'C');
 
     g.removeEdge('A', 'B');
-    expect(g.adjList['A'].has('B')).toBe(false);
-    expect(g.adjList['B'].has('A')).toBe(false);
+    expect(g.getEdges('A').has('B')).toBe(false);
+    expect(g.getEdges('B').has('A')).toBe(false);
 
     g.removeEdge('C', 'A');
 
-    expect(g.adjList['A'].has('C')).toBe(false);
-    expect(g.adjList['C'].has('A')).toBe(false);
+    expect(g.getEdges('A').has('C')).toBe(false);
+    expect(g.getEdges('C').has('A')).toBe(false);
   })
 
   it('can remove edges for directed graph', () => {
@@ -88,12 +88,12 @@ describe('Graph', () => {
 
     g.removeEdge('B', 'A')
 
-    expect(g.getEdges('A')).toEqual(['B', 'C']);
-    expect(g.getEdges('B')).toEqual([]);
-    expect(g.getEdges('C')).toEqual([]);
+    expect(g.getEdgesArray('A')).toEqual(['B', 'C']);
+    expect(g.getEdgesArray('B')).toEqual([]);
+    expect(g.getEdgesArray('C')).toEqual([]);
 
     g.removeEdge('A', 'B');
-    expect(g.getEdges('A')).toEqual(['C']);
+    expect(g.getEdgesArray('A')).toEqual(['C']);
   })
 
   it('can remove vertices', () => {
@@ -103,15 +103,15 @@ describe('Graph', () => {
     g.addVertex('C');
 
     g.removeVertex('D');
-    expect(g.vertices).toEqual(['A', 'B', 'C']);
+    expect(g.getVertices()).toEqual(['A', 'B', 'C']);
 
     g.removeVertex('C');
-    expect(g.vertices).toEqual(['A', 'B']);
+    expect(g.getVertices()).toEqual(['A', 'B']);
 
     g.addEdge('A', 'B');
     g.removeVertex('B');
-    expect(g.vertices).toEqual(['A']);
-    expect(g.getEdges('A')).toEqual([]);
+    expect(g.getVertices()).toEqual(['A']);
+    expect(g.getEdgesArray('A')).toEqual([]);
   })
 
   it('can get adj matrix', () => {
