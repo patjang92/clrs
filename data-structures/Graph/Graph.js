@@ -1,3 +1,12 @@
+import Queue from '../Queue/Queue';
+
+class GraphNode {
+  constructor(value) {
+    this.value = value;
+    this.edges = [];
+  }
+}
+
 export default class Graph {
 
   constructor(directed = false) {
@@ -17,15 +26,9 @@ export default class Graph {
       throw new Error("Vertex does not exist");
     }
 
-    // if (!this.adjList.hasOwnProperty(v)) {
-    //   this.adjList[v] = new Set();
-    // }
     this.adjList[v].add(u);
 
     if (!this.directed) {
-      // if (!this.adjList.hasOwnProperty(u)) {
-      //   this.adjList[u] = new Set();
-      // }
       this.adjList[u].add(v);
     } 
 
@@ -51,16 +54,11 @@ export default class Graph {
     if (!this.vertices.includes(v) || !this.vertices.includes(u)) {
       throw new Error("Vertex does not exist");
     }
-
     
-    // if (this.adjList.hasOwnProperty(v)) {
-      this.adjList[v].delete(u);
-    // }
+    this.adjList[v].delete(u);
 
     if (!this.directed) {
-      // if (this.adjList.hasOwnProperty(u)) {
-        this.adjList[u].delete(v);
-      // }
+      this.adjList[u].delete(v);
     }
 
     return true;
@@ -82,6 +80,49 @@ export default class Graph {
   getEdges(v) {
     if (!this.vertices.includes(v)) throw new Error("Vertex does not exist");
     return Array.from(this.adjList[v]);
+  }
+
+  bfsSearch(start, dest) {
+    if (!this.vertices.includes(s)) return;
+
+    const Status = Object.freeze({ UNVISITED: "unvisited", VISITING: "visited", VISITED: "visited" });
+
+    const visitStatuses = {};
+    const distances = {};
+    const parents = {};
+
+    let vertexQueue = new Queue();
+
+    this.vertices.forEach(v => { 
+      visitStatuses[v] = Status.UNVISITED;
+      distances[v] = Infinity;
+      parents[v] = null;
+    })
+
+    visitStatuses[start] = Status.VISITING;
+    distances[start] = 0;
+    parents[start] = null;
+
+    vertexQueue.enqueue(start);
+
+    while (!vertexQueue.isEmpty()) {
+      let u = vertexQueue.dequeue();
+      if (u == dest) return { node: u, distance: distances[u], parent: parents[u] };
+
+
+      this.getEdges(u).forEach(v => {
+        if (visitStatuses[v] == Status.UNVISITED) {
+          visitStatuses[v] = Status.VISITING;
+          distances[v] = distances[u] + 1;
+          parents[v] = u;
+          vertexQueue.enqueue(v);
+        }
+      })
+
+      visitStatuses[u] = Status.VISITED;
+    }
+
+    return null;
   }
 
 }
