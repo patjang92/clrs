@@ -314,4 +314,12 @@ export default class LinkedListWithTail {
     return this.head;
   }
 
+  /**
+   * @param {function} [callback]
+   * @return {string}
+   */
+  toString(callback) {
+    return this.toArray().map(node => node.toString(callback)).toString();
+  }
+
 }

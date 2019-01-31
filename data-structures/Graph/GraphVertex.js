@@ -1,4 +1,4 @@
-import LinkedList from '../linked-list/LinkedList';
+import LinkedList from '../LinkedList/LinkedListWithTail';
 
 export default class GraphVertex {
   /**
@@ -50,9 +50,9 @@ export default class GraphVertex {
   getNeighbors() {
     const edges = this.edges.toArray();
 
-    /** @param {LinkedListNode} node */
-    const neighborsConverter = (node) => {
-      return node.value.startVertex === this ? node.value.endVertex : node.value.startVertex;
+    /** @param {GraphEdge} edge */
+    const neighborsConverter = (edge) => {
+      return edge.startVertex === this ? edge.endVertex : edge.startVertex;
     };
 
     // Return either start or end vertex.
@@ -64,7 +64,7 @@ export default class GraphVertex {
    * @return {GraphEdge[]}
    */
   getEdges() {
-    return this.edges.toArray().map(linkedListNode => linkedListNode.value);
+    return this.edges.toArray();
   }
 
   /**
@@ -79,9 +79,9 @@ export default class GraphVertex {
    * @returns {boolean}
    */
   hasEdge(requiredEdge) {
-    const edgeNode = this.edges.find({
-      callback: edge => edge === requiredEdge,
-    });
+    const edgeNode = this.edges.search(undefined, 
+      edge => edge === requiredEdge,
+    );
 
     return !!edgeNode;
   }
@@ -91,9 +91,9 @@ export default class GraphVertex {
    * @returns {boolean}
    */
   hasNeighbor(vertex) {
-    const vertexNode = this.edges.find({
-      callback: edge => edge.startVertex === vertex || edge.endVertex === vertex,
-    });
+    const vertexNode = this.edges.search(undefined, 
+      edge => edge.startVertex === vertex || edge.endVertex === vertex,
+    );
 
     return !!vertexNode;
   }
@@ -107,7 +107,7 @@ export default class GraphVertex {
       return edge.startVertex === vertex || edge.endVertex === vertex;
     };
 
-    const edge = this.edges.find({ callback: edgeFinder });
+    const edge = this.edges.search(undefined, edgeFinder);
 
     return edge ? edge.value : null;
   }

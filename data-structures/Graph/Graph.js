@@ -1,184 +1,197 @@
-import Queue from '../Queue/Queue';
-
-class GraphNode {
-  constructor(value) {
-    this.value = value;
-    this.edges = [];
-  }
-}
-
 export default class Graph {
-
-  constructor(directed = false) {
-    this.directed = directed;
-    this.vertices = [];
-    this.adjList = {};
+  /**
+   * @param {boolean} isDirected
+   */
+  constructor(isDirected = false) {
+    this.vertices = {};
+    this.edges = {};
+    this.isDirected = isDirected;
   }
 
-  addVertex(v) {
-    if (this.getVertices().includes(v)) return false;
-    this.adjList[v] = new Set();
+  /**
+   * @param {GraphVertex} newVertex
+   * @returns {Graph}
+   */
+  addVertex(newVertex) {
+    this.vertices[newVertex.getKey()] = newVertex;
+
+    return this;
   }
 
-  addEdge(v, u) {
-    const vertices = this.getVertices();
+  /**
+   * @param {string} vertexKey
+   * @returns GraphVertex
+   */
+  getVertexByKey(vertexKey) {
+    return this.vertices[vertexKey];
+  }
 
-    if (!vertices.includes(v) || !vertices.includes(u)) {
-      throw new Error("Vertex does not exist");
+  /**
+   * @param {GraphVertex} vertex
+   * @returns {GraphVertex[]}
+   */
+  getNeighbors(vertex) {
+    return vertex.getNeighbors();
+  }
+
+  /**
+   * @return {GraphVertex[]}
+   */
+  getAllVertices() {
+    return Object.values(this.vertices);
+  }
+
+  /**
+   * @return {GraphEdge[]}
+   */
+  getAllEdges() {
+    return Object.values(this.edges);
+  }
+
+  /**
+   * @param {GraphEdge} edge
+   * @returns {Graph}
+   */
+  addEdge(edge) {
+    // Try to find and end start vertices.
+    let startVertex = this.getVertexByKey(edge.startVertex.getKey());
+    let endVertex = this.getVertexByKey(edge.endVertex.getKey());
+
+    // Insert start vertex if it wasn't inserted.
+    if (!startVertex) {
+      this.addVertex(edge.startVertex);
+      startVertex = this.getVertexByKey(edge.startVertex.getKey());
     }
 
-    this.getEdges(v).add(u);
-
-    if (!this.directed) {
-      this.getEdges(u).add(v);
-    } 
-
-    return true;
-  }
-
-  removeVertex(v) {
-    let vertices = this.getVertices();
-    const index = vertices.indexOf(v);
-    if (index < 0) return false;
-
-    delete this.adjList[v];    
-
-    Object.values(this.adjList).forEach(edges => {
-      edges.delete(v);
-    })
-
-    return true;
-  }
-
-  removeEdge(v, u) {
-    const vertices = this.getVertices();
-
-    if (!vertices.includes(v) || !vertices.includes(u)) {
-      throw new Error("Vertex does not exist");
-    }
-    
-    this.getEdges(v).delete(u);
-
-    if (!this.directed) {
-      this.getEdges(u).delete(v);
+    // Insert end vertex if it wasn't inserted.
+    if (!endVertex) {
+      this.addVertex(edge.endVertex);
+      endVertex = this.getVertexByKey(edge.endVertex.getKey());
     }
 
-    return true;
-  }
-
-  get adjMatrix() {
-    const vertices = this.getVertices();
-    const numVertices = vertices.length;
-    let matrix = new Array(numVertices).fill(0).map(() => new Array(numVertices).fill(0));
-    
-    vertices.forEach((v, i) => {
-      this.getEdges(v).forEach(u => {
-        matrix[i][vertices.indexOf(u)] = 1;
-      }) 
-    })
-
-    return matrix;
-  }
-
-  getVertices() {
-    return Object.keys(this.adjList);
-  }
-
-  getEdges(v) {
-    if (!this.getVertices().includes(v)) throw new Error("Vertex does not exist");
-    return this.adjList[v];
-  }
-
-  getEdgesArray(v) {
-    if (!this.getVertices().includes(v)) throw new Error("Vertex does not exist");
-    return Array.from(this.adjList[v]);
-  }
-
-  bfsTraversal(start, callback) {
-    const vertices = this.getVertices();
-    if (!vertices.includes(start)) return;
-
-    // enum
-    const Status = Object.freeze({ UNVISITED: "unvisited", VISITING: "visited", VISITED: "visited" });
-
-    const visitStatuses = {};
-    const distances = {};
-    const parents = {};
-
-    let vertexQueue = new Queue();
-
-    vertices.forEach(v => { 
-      visitStatuses[v] = Status.UNVISITED;
-      distances[v] = Infinity;
-      parents[v] = null;
-    })
-
-    visitStatuses[start] = Status.VISITING;
-    distances[start] = 0;
-    parents[start] = null;
-
-    vertexQueue.enqueue(start);
-
-    while (!vertexQueue.isEmpty()) {
-      let u = vertexQueue.dequeue();
-      // if (u == dest) return { node: u, distance: distances[u], parent: parents[u] };
-      callback(u);
-
-
-      this.getEdges(u).forEach(v => {
-        if (visitStatuses[v] == Status.UNVISITED) {
-          visitStatuses[v] = Status.VISITING;
-          distances[v] = distances[u] + 1;
-          parents[v] = u;
-          vertexQueue.enqueue(v);
-        }
-      })
-
-      visitStatuses[u] = Status.VISITED;
+    // Check if edge has been already added.
+    if (this.edges[edge.getKey()]) {
+      throw new Error('Edge has already been added before');
+    } else {
+      this.edges[edge.getKey()] = edge;
     }
 
-    return null;
+    // Add edge to the vertices.
+    if (this.isDirected) {
+      // If graph IS directed then add the edge only to start vertex.
+      startVertex.addEdge(edge);
+    } else {
+      // If graph ISN'T directed then add the edge to both vertices.
+      startVertex.addEdge(edge);
+      endVertex.addEdge(edge);
+    }
+
+    return this;
   }
 
-  // bfsTraversal(start, callback) {
-  //   const vertices = this.getVertices();
-  //   if (!vertices.includes(start)) return;
+  /**
+   * @param {GraphEdge} edge
+   */
+  deleteEdge(edge) {
+    // Delete edge from the list of edges.
+    if (this.edges[edge.getKey()]) {
+      delete this.edges[edge.getKey()];
+    } else {
+      throw new Error('Edge not found in graph');
+    }
 
-  //   const Status = Object.freeze({ UNVISITED: "unvisited", VISITING: "visited", VISITED: "visited" });
+    // Try to find and end start vertices and delete edge from them.
+    const startVertex = this.getVertexByKey(edge.startVertex.getKey());
+    const endVertex = this.getVertexByKey(edge.endVertex.getKey());
 
-  //   class BFSNode {
-  //     constructor(vertex = null, status = Status.UNVISITED, distance = Infinity, parent = null, edges) {
-  //       this.vertex = vertex;
-  //       this.status = status;
-  //       this.distance = distance;
-  //       this.parent = parent;
-  //     }
-  //   }
+    startVertex.deleteEdge(edge);
+    endVertex.deleteEdge(edge);
+  }
 
-  //   let vertexQueue = new Queue();
-  //   let vertexNodes = vertices.map(v => new BFSNode(v));
-  //   let startNode = new BFSNode(start, Status.VISITING, 0, null);
+  /**
+   * @param {GraphVertex} startVertex
+   * @param {GraphVertex} endVertex
+   * @return {(GraphEdge|null)}
+   */
+  findEdge(startVertex, endVertex) {
+    const vertex = this.getVertexByKey(startVertex.getKey());
 
-  //   vertexQueue.enqueue(startNode);
+    if (!vertex) {
+      return null;
+    }
 
-  //   while (!vertexQueue.isEmpty()) {
-  //     let u = vertexQueue.dequeue();
-  //     callback(u);
+    return vertex.findEdge(endVertex);
+  }
 
-  //     this.getEdges(u.vertex).forEach(v => {
+  /**
+   * @return {number}
+   */
+  getWeight() {
+    return this.getAllEdges().reduce((weight, graphEdge) => {
+      return weight + graphEdge.weight;
+    }, 0);
+  }
 
-  //       if (v.visited === Status.UNVISITED) {
-  //         v.status = Status.VISITING;
-  //         v.distance = u.distance + 1;
-  //         v.parent = u;
-  //         vertexQueue.enqueue(v);
-  //       }
-  //     })
+  /**
+   * Reverse all the edges in directed graph.
+   * @return {Graph}
+   */
+  reverse() {
+    /** @param {GraphEdge} edge */
+    this.getAllEdges().forEach((edge) => {
+      // Delete straight edge from graph and from vertices.
+      this.deleteEdge(edge);
 
-  //     u.status = Status.VISITED;
-  //   }
+      // Reverse the edge.
+      edge.reverse();
 
-  //   return null;
-  // }
+      // Add reversed edge back to the graph and its vertices.
+      this.addEdge(edge);
+    });
 
+    return this;
+  }
+
+  /**
+   * @return {object}
+   */
+  getVerticesIndices() {
+    const verticesIndices = {};
+    this.getAllVertices().forEach((vertex, index) => {
+      verticesIndices[vertex.getKey()] = index;
+    });
+
+    return verticesIndices;
+  }
+
+  /**
+   * @return {*[][]}
+   */
+  getAdjacencyMatrix() {
+    const vertices = this.getAllVertices();
+    const verticesIndices = this.getVerticesIndices();
+
+    // Init matrix with infinities meaning that there is no ways of
+    // getting from one vertex to another yet.
+    const adjacencyMatrix = Array(vertices.length).fill(null).map(() => {
+      return Array(vertices.length).fill(Infinity);
+    });
+
+    // Fill the columns.
+    vertices.forEach((vertex, vertexIndex) => {
+      vertex.getNeighbors().forEach((neighbor) => {
+        const neighborIndex = verticesIndices[neighbor.getKey()];
+        adjacencyMatrix[vertexIndex][neighborIndex] = this.findEdge(vertex, neighbor).weight;
+      });
+    });
+
+    return adjacencyMatrix;
+  }
+
+  /**
+   * @return {string}
+   */
+  toString() {
+    return Object.keys(this.vertices).toString();
+  }
 }

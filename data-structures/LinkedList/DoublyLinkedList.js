@@ -303,4 +303,12 @@ export default class DoublyLinkedList {
     // reassign head
     this.head = prev;
   }
+
+  /**
+   * @param {function} [callback]
+   * @return {string}
+   */
+  toString(callback) {
+    return this.toArray().map(node => node.toString(callback)).toString();
+  }
 }
