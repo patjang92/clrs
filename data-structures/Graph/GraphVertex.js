@@ -60,6 +60,15 @@ export default class GraphVertex {
     return edges.map(neighborsConverter);
   }
 
+  getOutboundNeighbors() {
+    const edges = this.edges.toArray();
+
+    const outboundEdgeFilter = (edge) => edge.startVertex === this;
+    const outboundNeighborConverter = (edge) => edge.endVertex;
+
+    return edges.filter(outboundEdgeFilter).map(outboundNeighborConverter);
+  }
+
   /**
    * @return {GraphEdge[]}
    */

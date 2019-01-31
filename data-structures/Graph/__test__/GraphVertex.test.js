@@ -140,6 +140,20 @@ describe('GraphVertex', () => {
     expect(neighbors[1]).toEqual(vertexC);
   });
 
+  it('should return vertex neighbors of outbound edges', () => {
+    const vertexA = new GraphVertex('A');
+    const vertexB = new GraphVertex('B');
+    const vertexC = new GraphVertex('C');
+
+    const edgeAB = new GraphEdge(vertexA, vertexB);
+    const edgeCA = new GraphEdge(vertexC, vertexA);
+    vertexA
+      .addEdge(edgeAB)
+      .addEdge(edgeCA);
+
+    expect(vertexA.getOutboundNeighbors()).toEqual([vertexB]);
+  });
+
   it('should check if vertex has specific neighbor', () => {
     const vertexA = new GraphVertex('A');
     const vertexB = new GraphVertex('B');
