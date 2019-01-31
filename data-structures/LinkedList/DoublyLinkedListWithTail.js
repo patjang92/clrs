@@ -1,4 +1,5 @@
 import DoublyLinkedListNode from './DoublyLinkedListNode';
+import Comparator from '../../utils/comparator/Comparator';
 
 /**
  * Implements Doubly Linked List class using Linked List nodes 
@@ -9,9 +10,10 @@ export default class DoublyLinkedList {
    * Creates Linked List object with head node as argument
    * 
    */
-  constructor() {
+  constructor(comparatorFunction) {
     this.head = null;
     this.tail = null;
+    this.compare = new Comparator(comparatorFunction);    
   }
 
   /**
@@ -141,13 +143,22 @@ export default class DoublyLinkedList {
    * 
    * @param {*} value value that we wish to find in Linked List
    */
-  search(value) {
+  search(value, callback = null) {
     let currentNode = this.head;
-    while (currentNode != null && currentNode.value !== value ) {
+
+    while (currentNode) {
+      if (callback && callback(currentNode.value)) {
+        return currentNode;
+      } else if (value != undefined && this.compare.equal(currentNode.value, value)) {
+        return currentNode;
+      }
+
       currentNode = currentNode.next;
     }
+
     return currentNode;
   }
+
 
 
   /**
