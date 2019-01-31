@@ -200,25 +200,16 @@ export default class Graph {
   breadthFirstSearch(start, callback = null) {
     const Status = Object.freeze({ UNVISITED: 'unvisited', VISITING: 'visiting', VISITED: 'visited' })
 
-    class bfsNode {
-      constructor(graphNode, visited = Status.UNVISITED, distance = Infinity, parent = null) {
-        this.graphNode = graphNode;
-        this.visited = visited;
-        this.distance = distance;
-        this.parent = parent;
-      }
-    }
-
     let visited = {};
     let distance = {};
     let parent = {};
-    // let vertices = this.getAllVertices().map(v => new bfsNode(v));
+
     this.getAllVertices().forEach(v => {
       visited[v] = Status.UNVISITED;
       distance[v] = Infinity;
       parent[v] = null;
     }) 
-    // let startNode = new bfsNode(start, Status.VISITING, 0, null);
+
     visited[start] = Status.VISITING;
     distance[start] = Infinity;
     parent[start] = null;
@@ -233,7 +224,6 @@ export default class Graph {
       }
 
       v.getOutboundNeighbors().forEach(u => {
-        console.log("u = ", u);
         if (visited[u] === Status.UNVISITED) {
           visited[u] = Status.VISITING;
           distance[u] = distance[v] + 1;
@@ -244,6 +234,5 @@ export default class Graph {
     }
 
     return;
-
   }
 }
