@@ -1,4 +1,5 @@
 import LinkedListNode from './LinkedListNode';
+import Comparator from '../../utils/comparator/Comparator';
 
 /**
  * Implements Singly Linked List class using Linked List nodes 
@@ -9,8 +10,9 @@ export default class LinkedList {
    * Creates Linked List object with head node as argument
    * 
    */
-  constructor() {
+  constructor(comparatorFunction) {
     this.head = null;
+    this.compare = new Comparator(comparatorFunction);
   }
 
   isEmpty() {
@@ -125,7 +127,7 @@ export default class LinkedList {
     while (currentNode) {
       if (callback && callback(currentNode.value)) {
         return currentNode;
-      } else if (value != undefined && currentNode.value == value) {
+      } else if (value != undefined && this.compare.equal(currentNode.value, value)) {
         return currentNode;
       }
 

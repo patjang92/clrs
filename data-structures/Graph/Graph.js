@@ -140,4 +140,45 @@ export default class Graph {
     return null;
   }
 
+  // bfsTraversal(start, callback) {
+  //   const vertices = this.getVertices();
+  //   if (!vertices.includes(start)) return;
+
+  //   const Status = Object.freeze({ UNVISITED: "unvisited", VISITING: "visited", VISITED: "visited" });
+
+  //   class BFSNode {
+  //     constructor(vertex = null, status = Status.UNVISITED, distance = Infinity, parent = null, edges) {
+  //       this.vertex = vertex;
+  //       this.status = status;
+  //       this.distance = distance;
+  //       this.parent = parent;
+  //     }
+  //   }
+
+  //   let vertexQueue = new Queue();
+  //   let vertexNodes = vertices.map(v => new BFSNode(v));
+  //   let startNode = new BFSNode(start, Status.VISITING, 0, null);
+
+  //   vertexQueue.enqueue(startNode);
+
+  //   while (!vertexQueue.isEmpty()) {
+  //     let u = vertexQueue.dequeue();
+  //     callback(u);
+
+  //     this.getEdges(u.vertex).forEach(v => {
+
+  //       if (v.visited === Status.UNVISITED) {
+  //         v.status = Status.VISITING;
+  //         v.distance = u.distance + 1;
+  //         v.parent = u;
+  //         vertexQueue.enqueue(v);
+  //       }
+  //     })
+
+  //     u.status = Status.VISITED;
+  //   }
+
+  //   return null;
+  // }
+
 }

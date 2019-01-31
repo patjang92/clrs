@@ -145,7 +145,7 @@ describe('Graph', () => {
     g.addEdge('D', 'E');
 
     let traversal = [];
-    g.bfsTraversal('A', (v) => traversal.push(v));
+    g.bfsTraversal('A', (v) => traversal.push(v.vertex));
     expect(traversal).toEqual(['A', 'B', 'C', 'D', 'E']);
 
     traversal = [];
