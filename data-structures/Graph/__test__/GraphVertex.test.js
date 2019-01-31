@@ -199,4 +199,6 @@ describe('GraphVertex', () => {
 
     expect(vertexA.getEdges().length).toEqual(3);
   });
+
+
 });

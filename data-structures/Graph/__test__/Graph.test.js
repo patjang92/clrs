@@ -385,4 +385,31 @@ describe('Graph', () => {
       [Infinity, Infinity, Infinity, Infinity],
     ]);
   });
+
+  it('should do a breadth first search', () => {
+    const vertexA = new GraphVertex('A');
+    const vertexB = new GraphVertex('B');
+    const vertexC = new GraphVertex('C');
+    const vertexD = new GraphVertex('D');
+
+    const edgeAB = new GraphEdge(vertexA, vertexB);
+    const edgeBC = new GraphEdge(vertexB, vertexC);
+    const edgeCD = new GraphEdge(vertexC, vertexD);
+    const edgeBD = new GraphEdge(vertexB, vertexD);
+
+    const graph = new Graph(true);
+    graph
+      .addEdge(edgeAB)
+      .addEdge(edgeBC)
+      .addEdge(edgeCD)
+      .addEdge(edgeBD);
+
+    let traversal = [];
+    const addToTraversal = (node) => traversal.push(node.value);
+
+    graph.breadthFirstSearch(vertexA, addToTraversal);
+    expect(traversal).toEqual(['A', 'B', 'C', 'D'])
+  })
+
+
 });
