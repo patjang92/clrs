@@ -141,14 +141,17 @@ export default class Graph {
   reverse() {
     /** @param {GraphEdge} edge */
     this.getAllEdges().forEach((edge) => {
-      // Delete straight edge from graph and from vertices.
-      this.deleteEdge(edge);
 
-      // Reverse the edge.
-      edge.reverse();
+      if (!this.findEdge(edge.endVertex, edge.startVertex)) {
+        // Delete straight edge from graph and from vertices.
+        this.deleteEdge(edge);
 
-      // Add reversed edge back to the graph and its vertices.
-      this.addEdge(edge);
+        // Reverse the edge.
+        edge.reverse();
+  
+        // Add reversed edge back to the graph and its vertices.
+        this.addEdge(edge);
+      }
     });
 
     return this;

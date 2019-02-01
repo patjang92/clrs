@@ -15,7 +15,8 @@ describe('Graph - Strongly Connected Components', () => {
     const vertexG = new GraphVertex('G');
     const vertexH = new GraphVertex('H');
     const vertexI = new GraphVertex('I');
-
+    const vertexJ = new GraphVertex('J');
+    const vertexK = new GraphVertex('K');
 
     const edgeAB = new GraphEdge(vertexA, vertexB);
 
@@ -27,10 +28,14 @@ describe('Graph - Strongly Connected Components', () => {
     const edgeEF = new GraphEdge(vertexE, vertexF);
     const edgeFA = new GraphEdge(vertexF, vertexA);
 
+    const edgeAG = new GraphEdge(vertexA, vertexG);
     const edgeHG = new GraphEdge(vertexH, vertexG);
-    const edgeIG = new GraphEdge(vertexG, vertexI);
-    const edgeIH = new GraphEdge(vertexI, vertexH);
+    const edgeGH = new GraphEdge(vertexG, vertexH);
 
+    const edgeAI = new GraphEdge(vertexA, vertexI);
+
+    const edgeJK = new GraphEdge(vertexJ, vertexK);
+    const edgeKJ = new GraphEdge(vertexK, vertexJ);
 
     const graph = new Graph(true);
     graph
@@ -39,79 +44,19 @@ describe('Graph - Strongly Connected Components', () => {
       .addEdge(edgeCD)
       .addEdge(edgeDB)
       .addEdge(edgeHG)
-      .addEdge(edgeIG)
+      .addEdge(edgeGH)
       .addEdge(edgeAE)
       .addEdge(edgeEF)
       .addEdge(edgeFA)
-      .addEdge(edgeIH);
+      .addEdge(edgeAI)
+      .addEdge(edgeAG)
+      .addEdge(edgeJK)
+      .addEdge(edgeKJ)
 
-    // console.log('graph.getAllVertices() :', graph.getAllVertices());
+    const sccSets = stronglyConnectedComponents(graph);
+    expect(sccSets.map(set => set.map(v => v.value))).toEqual([['J', 'K'], ['A','F','E'], ['G', 'H'], ['I'], ['B','D','C']])
 
 
-    stronglyConnectedComponents(graph);
-    // console.log('sortedtoArray :', sorted.toArray());
 
-
-    // expect(traversal).toEqual(['A', 'B', 'C', 'D', 'E', 'F'])
-    // expect(discoveryTime).toEqual({ A: 1, B: 2, C: 3, D: 4, E: 8, F: 9 });
-    // expect(finishTime).toEqual({ D: 5, C: 6, B: 7, F: 10, E: 11, A: 12 })
   })
-
-  // it('should do topological sorting on graph', () => {
-  //   const vertexA = new GraphVertex('A');
-  //   const vertexB = new GraphVertex('B');
-  //   const vertexC = new GraphVertex('C');
-  //   const vertexD = new GraphVertex('D');
-  //   const vertexE = new GraphVertex('E');
-  //   const vertexF = new GraphVertex('F');
-  //   const vertexG = new GraphVertex('G');
-  //   const vertexH = new GraphVertex('H');
-
-  //   const edgeAC = new GraphEdge(vertexA, vertexC);
-  //   const edgeBC = new GraphEdge(vertexB, vertexC);
-  //   const edgeBD = new GraphEdge(vertexB, vertexD);
-  //   const edgeCE = new GraphEdge(vertexC, vertexE);
-  //   const edgeDF = new GraphEdge(vertexD, vertexF);
-  //   const edgeEF = new GraphEdge(vertexE, vertexF);
-  //   const edgeEH = new GraphEdge(vertexE, vertexH);
-  //   const edgeFG = new GraphEdge(vertexF, vertexG);
-
-  //   const graph = new Graph(true);
-
-  //   graph
-  //     .addEdge(edgeAC)
-  //     .addEdge(edgeBC)
-  //     .addEdge(edgeBD)
-  //     .addEdge(edgeCE)
-  //     .addEdge(edgeDF)
-  //     .addEdge(edgeEF)
-  //     .addEdge(edgeEH)
-  //     .addEdge(edgeFG);
-
-  //   const sortedVertices = topologicalSort(graph);
-
-  //   expect(sortedVertices).toBeDefined();
-  //   expect(sortedVertices.length).toBe(graph.getAllVertices().length);
-  //   // expect(sortedVertices).toEqual([
-  //   //   vertexB,
-  //   //   vertexD,
-  //   //   vertexA,
-  //   //   vertexC,
-  //   //   vertexE,
-  //   //   vertexH,
-  //   //   vertexF,
-  //   //   vertexG,
-  //   // ]);
-    
-  //   expect(sortedVertices.map(v => v.value)).toEqual([
-  //     vertexB,
-  //     vertexD,
-  //     vertexA,
-  //     vertexC,
-  //     vertexE,
-  //     vertexH,
-  //     vertexF,
-  //     vertexG,
-  //   ].map(v => v.value));
-  // })
 })
