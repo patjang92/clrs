@@ -144,4 +144,5 @@ export default class GraphVertex {
   toString(callback) {
     return callback ? callback(this.value) : `${this.value}`;
   }
+
 }
