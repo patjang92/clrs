@@ -282,7 +282,9 @@ export default class Graph {
     })
 
     return metaData;
-    
+  }
 
+  topologicalSort() {
+    
   }
 }

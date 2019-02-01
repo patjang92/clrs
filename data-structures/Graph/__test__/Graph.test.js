@@ -1,6 +1,7 @@
 import Graph from '../Graph';
 import GraphVertex from '../GraphVertex';
 import GraphEdge from '../GraphEdge';
+import depthFirstSearch from '../depthFirstSearch';
 
 describe('Graph', () => {
   it('should add vertices to graph', () => {
@@ -442,10 +443,28 @@ describe('Graph', () => {
       .addEdge(edgeEF);
 
     let traversal = [];
-    const addToTraversal = (node) => traversal.push(node.value);
+    let time = 0;
+    let discoveryTime = {};
+    let finishTime = {};
+    let parent = {};
+    
+    const enterVertex = ({ currentVertex, previousVertex }) => { 
+      time++;
+      traversal.push(currentVertex.value) 
+      discoveryTime[currentVertex.getKey()] = time;
+      parent[currentVertex.getKey()] = previousVertex;
+    }
 
-    graph.depthFirstSearch(vertexA, addToTraversal);
+    const leaveVertex = ({currentVertex}) => {
+      time++;
+      finishTime[currentVertex.getKey()] = time;
+    }
+
+    depthFirstSearch(graph, vertexA, { enterVertex, leaveVertex })
+
     expect(traversal).toEqual(['A', 'B', 'C', 'D', 'E', 'F'])
+    expect(discoveryTime).toEqual({ A: 1, B: 2, C: 3, D: 4, E: 8, F: 9 });
+    expect(finishTime).toEqual({ D: 5, C: 6, B: 7, F: 10, E: 11, A: 12 })
   })
 
 
