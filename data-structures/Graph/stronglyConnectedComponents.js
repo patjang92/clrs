@@ -1,9 +1,7 @@
 import depthFirstSearch from './depthFirstSearch';
-import Queue from '../Queue/Queue';
 import Stack from '../Stack/Stack';
 
 export default function stronglyConnectedComponents(graph) {
-
   let verticesByDecreasingFinishTime = getVerticesByDecreasingFinishTime(graph);
   graph.reverse();
 
@@ -36,7 +34,6 @@ function getVerticesByDecreasingFinishTime(graph) {
 }
 
 function getStronglyConnectedComponents(graph, vertexStack) {
-
   const seen = {};
   const sccSets = [];
   let sccSet = [];
