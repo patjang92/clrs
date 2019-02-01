@@ -268,11 +268,6 @@ export default class Graph {
       discoveryTime: {},
       finishTime: {}
     }
-    const visited = {};
-    const parent = {};
-    const discoveryTime = {};
-    const finishTime = {};
-
     
     const vertices = this.getAllVertices();
     vertices.forEach(v => {
