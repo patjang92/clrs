@@ -51,6 +51,6 @@ export default class Stack {
    * @returns {(*|array)} stack as array
    */
   toArray() {
-    return this.stackArray;
+    return this.stackArray.reverse();
   }
 }
