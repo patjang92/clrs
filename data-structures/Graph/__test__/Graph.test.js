@@ -391,24 +391,61 @@ describe('Graph', () => {
     const vertexB = new GraphVertex('B');
     const vertexC = new GraphVertex('C');
     const vertexD = new GraphVertex('D');
+    const vertexE = new GraphVertex('E');
+    const vertexF = new GraphVertex('F');
 
     const edgeAB = new GraphEdge(vertexA, vertexB);
     const edgeBC = new GraphEdge(vertexB, vertexC);
     const edgeCD = new GraphEdge(vertexC, vertexD);
     const edgeBD = new GraphEdge(vertexB, vertexD);
+    const edgeAE = new GraphEdge(vertexA, vertexE);
+    const edgeEF = new GraphEdge(vertexE, vertexF);
 
     const graph = new Graph(true);
     graph
       .addEdge(edgeAB)
       .addEdge(edgeBC)
       .addEdge(edgeCD)
-      .addEdge(edgeBD);
+      .addEdge(edgeBD)
+      .addEdge(edgeAE)
+      .addEdge(edgeEF);
 
     let traversal = [];
     const addToTraversal = (node) => traversal.push(node.value);
 
     graph.breadthFirstSearch(vertexA, addToTraversal);
-    expect(traversal).toEqual(['A', 'B', 'C', 'D'])
+    expect(traversal).toEqual(['A', 'B', 'E', 'C', 'D', 'F'])
+  })
+
+  it('should do a depth first search', () => {
+    const vertexA = new GraphVertex('A');
+    const vertexB = new GraphVertex('B');
+    const vertexC = new GraphVertex('C');
+    const vertexD = new GraphVertex('D');
+    const vertexE = new GraphVertex('E');
+    const vertexF = new GraphVertex('F');
+
+    const edgeAB = new GraphEdge(vertexA, vertexB);
+    const edgeBC = new GraphEdge(vertexB, vertexC);
+    const edgeCD = new GraphEdge(vertexC, vertexD);
+    const edgeBD = new GraphEdge(vertexB, vertexD);
+    const edgeAE = new GraphEdge(vertexA, vertexE);
+    const edgeEF = new GraphEdge(vertexE, vertexF);
+
+    const graph = new Graph(true);
+    graph
+      .addEdge(edgeAB)
+      .addEdge(edgeBC)
+      .addEdge(edgeCD)
+      .addEdge(edgeBD)
+      .addEdge(edgeAE)
+      .addEdge(edgeEF);
+
+    let traversal = [];
+    const addToTraversal = (node) => traversal.push(node.value);
+
+    graph.depthFirstSearch(vertexA, addToTraversal);
+    expect(traversal).toEqual(['A', 'B', 'C', 'D', 'E', 'F'])
   })
 
 

@@ -235,4 +235,59 @@ export default class Graph {
 
     return;
   }
+
+  depthFirstSearch(start, callback = null) {
+    const Status = Object.freeze({ UNVISITED: 'unvisited', VISITING: 'visiting', VISITED: 'visited' })
+
+    function dfsVisit(v, time, metaData, callback) {
+      const { visited, parent, discoveryTime, finishTime } = metaData;
+      
+      callback(v);
+      
+      time++;
+      discoveryTime[v] = time;
+      visited[v] = Status.VISITING;
+
+      v.getOutboundNeighbors().forEach(u => {
+        if (visited[u] === Status.UNVISITED) {
+          parent[u] = v;
+          dfsVisit(u, time, metaData, callback);
+        }
+      })
+
+      visited[v] = Status.VISITED;
+      time++;
+      finishTime[v] = time;
+    }
+    
+    let time = 0;
+
+    const metaData = {
+      visited: {},
+      parent: {},
+      discoveryTime: {},
+      finishTime: {}
+    }
+    const visited = {};
+    const parent = {};
+    const discoveryTime = {};
+    const finishTime = {};
+
+    
+    const vertices = this.getAllVertices();
+    vertices.forEach(v => {
+      metaData.visited[v] = Status.UNVISITED;
+      metaData.parent[v] = null;
+    }) 
+
+    vertices.forEach(v => {
+      if (metaData.visited[v] === Status.UNVISITED) {
+        dfsVisit(v, time, metaData, callback);
+      }
+    })
+
+    return metaData;
+    
+
+  }
 }
