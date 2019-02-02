@@ -33,27 +33,14 @@ describe('Breadth First Search', () => {
     let distance = {};
     let visited = {};
 
-    // let distance = 0;
     distance[vertexA.getKey()] = 0;
     parent[vertexA.getKey()] = null;
     
-    const enterVertex = ({ previousVertex, currentVertex }) => {
-      console.log("inside enterVertex");
-      console.log('currentVertex.value :', currentVertex.value);
-      // let cKey = currentVertex.getKey();
-      // visited[cKey] = true;
-      // parent[cKey] = previousVertex;
-      if (previousVertex) {
-        console.log('previousVertex.value :', previousVertex.value);
-        // distance[cKey] = distance[previousVertex.getKey()] + 1;
-      }
+    const enterVertex = ({ currentVertex }) => {
       traversal.push(currentVertex);
     }
   
     const allowTraversal = ({ currentVertex, nextVertex }) => {
-      console.log("inside allowtTraversal");
-      console.log('nextVertex :', nextVertex);
-      console.log('visited :', visited);
       if (!visited.hasOwnProperty(nextVertex.getKey())) {
         let nKey = nextVertex.getKey();
         visited[nKey] = true;
@@ -66,9 +53,8 @@ describe('Breadth First Search', () => {
 
     breadthFirstSearch(graph, vertexA, { enterVertex, allowTraversal })
 
-    console.log('traversal.map(v => v.value) :', traversal.map(v => v.value));
-    console.log('distance :', distance);
-    console.log('parent :', parent);
-
+    expect(traversal.map(v => v.value)).toEqual([ 'A', 'B', 'E', 'C', 'D', 'F' ]);
+    expect(distance).toEqual({ A: 0, B: 1, E: 1, C: 2, D: 2, F: 2 });
+    expect(parent[vertexB.getKey()]).toEqual(vertexA);
   })
 })

@@ -1,5 +1,3 @@
-import Graph from './Graph';
-import GraphVertex from './GraphVertex';
 import Queue from '../Queue/Queue';
 
 function initCallbacks(callbacks = {}) {
@@ -24,15 +22,12 @@ function initCallbacks(callbacks = {}) {
 
 export default function breadthFirstSearch(graph, startVertex, callbacks) {
   let bfsCallbacks = initCallbacks(callbacks);
-
   let queue = new Queue();
   let previousVertex = null;
 
   queue.enqueue(startVertex);
   while (!queue.isEmpty()) {
     const currentVertex = queue.dequeue();
-    console.log("start of new loop");
-    console.log('currentVertex.value :', currentVertex.value);
     bfsCallbacks.enterVertex({ currentVertex, previousVertex });
 
     currentVertex.getOutboundNeighbors().forEach(nextVertex => {
