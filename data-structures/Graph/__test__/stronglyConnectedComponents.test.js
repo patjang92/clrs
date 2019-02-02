@@ -54,9 +54,6 @@ describe('Graph - Strongly Connected Components', () => {
       .addEdge(edgeKJ)
 
     const sccSets = stronglyConnectedComponents(graph);
-    expect(sccSets.map(set => set.map(v => v.value))).toEqual([['J', 'K'], ['A','F','E'], ['G', 'H'], ['I'], ['B','D','C']])
-
-
-
+    expect(sccSets.map(set => set.map(v => v.value))).toEqual([['J', 'K'], ['A','F','E'], ['G', 'H'], ['I'], ['B','D','C']]);
   })
 })
