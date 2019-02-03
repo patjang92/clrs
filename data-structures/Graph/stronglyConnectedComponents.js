@@ -25,7 +25,6 @@ function getStronglyConnectedComponents(graph, vertices) {
   };
 
   vertices.forEach(vertex => {
-    // let vertex = vertexStack.pop();
     if (!seen.hasOwnProperty(vertex.getKey())) {
       sccSet = [];
       depthFirstSearch(graph, vertex, callbacks);
