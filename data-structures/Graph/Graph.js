@@ -1,4 +1,5 @@
 import Queue from '../Queue/Queue';
+import breadthFirstSearch from './breadthFirstSearch';
 
 export default class Graph {
   /**
@@ -200,43 +201,34 @@ export default class Graph {
     return Object.keys(this.vertices).toString();
   }
 
-  breadthFirstSearch(start, callback = null) {
-    const Status = Object.freeze({ UNVISITED: 'unvisited', VISITING: 'visiting', VISITED: 'visited' })
 
-    let visited = {};
-    let distance = {};
+  bfsTraversal(start) {
+    let traversal = [];
     let parent = {};
+    let distance = {};
+    let visited = {};
 
-    this.getAllVertices().forEach(v => {
-      visited[v] = Status.UNVISITED;
-      distance[v] = Infinity;
-      parent[v] = null;
-    }) 
-
-    visited[start] = Status.VISITING;
-    distance[start] = Infinity;
-    parent[start] = null;
-
-    let vertexQueue = new Queue();
-    vertexQueue.enqueue(start);
-
-    while (!vertexQueue.isEmpty()) {
-      let v = vertexQueue.dequeue();
-      if (callback) {
-        callback({...v, visited: visited[v], distance: distance[v], parent: parent[v]});
+    distance[start.getKey()] = 0;
+    parent[start.getKey()] = null;
+    
+    const enterVertex = ({ currentVertex }) => {
+      traversal.push(currentVertex);
+    }
+  
+    const allowTraversal = ({ currentVertex, nextVertex }) => {
+      if (!visited.hasOwnProperty(nextVertex.getKey())) {
+        let nKey = nextVertex.getKey();
+        visited[nKey] = true;
+        parent[nKey] = currentVertex;
+        distance[nKey] = distance[currentVertex.getKey()] + 1;
+        return true;
       }
-
-      v.getOutboundNeighbors().forEach(u => {
-        if (visited[u] === Status.UNVISITED) {
-          visited[u] = Status.VISITING;
-          distance[u] = distance[v] + 1;
-          parent[u] = v;
-          vertexQueue.enqueue(u);
-        }
-      })
+      return false;
     }
 
-    return;
+    breadthFirstSearch(this, start, { enterVertex, allowTraversal })
+
+    return { traversal, parent, distance }
   }
 
 }
