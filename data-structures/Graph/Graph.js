@@ -1,5 +1,6 @@
 import Queue from '../Queue/Queue';
 import breadthFirstSearch from './breadthFirstSearch';
+import depthFirstSearch from './depthFirstSearch';
 
 export default class Graph {
   /**
@@ -228,6 +229,30 @@ export default class Graph {
 
     breadthFirstSearch(this, start, { enterVertex, allowTraversal })
     return { traversal, parent, distance }
+  }
+
+  dfsTraversal(startVertex) {
+    let traversal = [];
+    let time = 0;
+    let discoveryTime = {};
+    let finishTime = {};
+    let parent = {};
+    
+    const enterVertex = ({ currentVertex, previousVertex }) => { 
+      time++;
+      traversal.push(currentVertex.value) 
+      discoveryTime[currentVertex.getKey()] = time;
+      parent[currentVertex.getKey()] = previousVertex;
+    }
+
+    const leaveVertex = ({currentVertex}) => {
+      time++;
+      finishTime[currentVertex.getKey()] = time;
+    }
+
+    depthFirstSearch(this, startVertex, { enterVertex, leaveVertex });
+
+    return { traversal, discoveryTime, finishTime, parent }
   }
 
 }
