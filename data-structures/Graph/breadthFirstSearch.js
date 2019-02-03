@@ -27,6 +27,7 @@ function initCallbacks(callbacks = {}) {
   return bfsCallbacks;
 }
 
+// O(E + V)
 export default function breadthFirstSearch(graph, startVertex, callbacks) {
   let bfsCallbacks = initCallbacks(callbacks);
   let queue = new Queue();

@@ -77,7 +77,7 @@ describe('Depth First Search', () => {
       .addEdge(edgeAE)
       .addEdge(edgeEF);
 
-    let { traversal, discoveryTime ,finishTime, parent } = graph.dfsTraversal(vertexA)
+    let { traversal, discoveryTime ,finishTime } = graph.dfsTraversal(vertexA)
 
     expect(traversal).toEqual(['A', 'B', 'C', 'D', 'E', 'F'])
     expect(discoveryTime).toEqual({ A: 1, B: 2, C: 3, D: 4, E: 8, F: 9 });
