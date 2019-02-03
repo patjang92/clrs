@@ -1,6 +1,5 @@
 import depthFirstSearch from './depthFirstSearch';
 import topologicalSort from './topologicalSort';
-import Stack from '../Stack/Stack';
 
 export default function stronglyConnectedComponents(graph) {
   let verticesByDecreasingFinishTime = topologicalSort(graph);

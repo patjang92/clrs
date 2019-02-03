@@ -22,8 +22,6 @@ describe('Graph - Topological Sort', () => {
     const edgeBC = new GraphEdge(vertexB, vertexC);
     const edgeCD = new GraphEdge(vertexC, vertexD);
     const edgeBD = new GraphEdge(vertexB, vertexD);
-    // const edgeAE = new GraphEdge(vertexA, vertexE);
-    // const edgeEF = new GraphEdge(vertexE, vertexF);
     const edgeEA = new GraphEdge(vertexE, vertexA);
     const edgeFE = new GraphEdge(vertexF, vertexE);
 
@@ -37,8 +35,6 @@ describe('Graph - Topological Sort', () => {
       .addEdge(edgeBC)
       .addEdge(edgeCD)
       .addEdge(edgeBD)
-      // .addEdge(edgeAE)
-      // .addEdge(edgeEF)
       .addEdge(edgeHG)
       .addEdge(edgeIG)
       .addEdge(edgeEA)
@@ -48,12 +44,6 @@ describe('Graph - Topological Sort', () => {
 
     let sorted = topologicalSort(graph);
     console.log('sorted :', sorted);
-    // console.log('sortedtoArray :', sorted.toArray());
-
-
-    // expect(traversal).toEqual(['A', 'B', 'C', 'D', 'E', 'F'])
-    // expect(discoveryTime).toEqual({ A: 1, B: 2, C: 3, D: 4, E: 8, F: 9 });
-    // expect(finishTime).toEqual({ D: 5, C: 6, B: 7, F: 10, E: 11, A: 12 })
   })
 
   it('should do topological sorting on graph', () => {
@@ -91,16 +81,6 @@ describe('Graph - Topological Sort', () => {
 
     expect(sortedVertices).toBeDefined();
     expect(sortedVertices.length).toBe(graph.getAllVertices().length);
-    // expect(sortedVertices).toEqual([
-    //   vertexB,
-    //   vertexD,
-    //   vertexA,
-    //   vertexC,
-    //   vertexE,
-    //   vertexH,
-    //   vertexF,
-    //   vertexG,
-    // ]);
     
     expect(sortedVertices.map(v => v.value)).toEqual([
       vertexB,

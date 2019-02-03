@@ -9,7 +9,7 @@ export default class Stack {
    * @param {*} array Will take optional array and use as stack 
    */
   constructor(array = []) {
-    this.stackArray = array;
+    this.stackArray = array.reverse();
   }
 
   /**
@@ -51,6 +51,7 @@ export default class Stack {
    * @returns {(*|array)} stack as array
    */
   toArray() {
-    return this.stackArray.reverse();
+    let array = [...this.stackArray];
+    return array.reverse();
   }
 }

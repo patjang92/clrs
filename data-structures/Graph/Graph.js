@@ -1,4 +1,3 @@
-import Queue from '../Queue/Queue';
 import breadthFirstSearch from './breadthFirstSearch';
 import depthFirstSearch from './depthFirstSearch';
 

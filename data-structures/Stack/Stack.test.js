@@ -19,15 +19,15 @@ test('push elements onto stack in order', () => {
   expect(stack.toArray()).toEqual([1]);
   expect(stack.isEmpty()).toEqual(false); 
   stack.push(2);
-  expect(stack.toArray()).toEqual([1, 2]);
+  expect(stack.toArray()).toEqual([2, 1]);
   stack.push(3);
-  expect(stack.toArray()).toEqual([1, 2, 3]);
+  expect(stack.toArray()).toEqual([3, 2, 1]);
 })
 
 test('pop elements off of stack in order', () => {
-  const stack = new Stack([1, 2, 3]);
+  const stack = new Stack([3, 2, 1]);
   expect(stack.pop()).toEqual(3);
-  expect(stack.toArray()).toEqual([1, 2]);
+  expect(stack.toArray()).toEqual([2, 1]);
   expect(stack.pop()).toEqual(2);
   expect(stack.toArray()).toEqual([1]);
   expect(stack.pop()).toEqual(1);
