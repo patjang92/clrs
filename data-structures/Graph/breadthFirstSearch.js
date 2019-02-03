@@ -2,8 +2,9 @@ import Queue from '../Queue/Queue';
 
 function initCallbacks(callbacks = {}) {
   
-  const allowTraversal = ({ currentVertex, nextVertex }) => {
+  const allowTraversal = (() => {
     let visited = {};
+    return ({ nextVertex }) => {
 
     if (!visited.hasOwnProperty(nextVertex.getKey())) {
       let nKey = nextVertex.getKey();
@@ -11,7 +12,8 @@ function initCallbacks(callbacks = {}) {
       return true;
     }
     return false;
-  }
+    }
+  })()
 
   const enterVertex = () => {};
 

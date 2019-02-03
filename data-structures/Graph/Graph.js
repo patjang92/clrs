@@ -227,7 +227,6 @@ export default class Graph {
     }
 
     breadthFirstSearch(this, start, { enterVertex, allowTraversal })
-
     return { traversal, parent, distance }
   }
 

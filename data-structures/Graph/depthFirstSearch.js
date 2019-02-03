@@ -49,9 +49,7 @@ function depthFirstSearchRecursive(graph, currentVertex, previousVertex, callbac
   callbacks.enterVertex({ currentVertex, previousVertex });
 
   currentVertex.getOutboundNeighbors().forEach((nextVertex) => {
-    // console.log('nextVertex :', nextVertex);
     if (callbacks.allowTraversal({ previousVertex, currentVertex, nextVertex })) {
-      // console.log("allowed");
       depthFirstSearchRecursive(graph, nextVertex, currentVertex, callbacks);
     }
   });
