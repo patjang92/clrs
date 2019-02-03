@@ -1,7 +1,5 @@
 import Graph from './Graph';
 import depthFirstSearch from './depthFirstSearch';
-import LinkedList from '../LinkedList/LinkedList';
-import Queue from '../Queue/Queue';
 import Stack from '../Stack/Stack';
 
 /**
@@ -29,5 +27,4 @@ export default function topologicalSort(graph) {
   })
 
   return sortedNodes.toArray();
-
 }
