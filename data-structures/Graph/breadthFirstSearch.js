@@ -1,24 +1,24 @@
 import Queue from '../Queue/Queue';
 
 function initCallbacks(callbacks = {}) {
-  
-  const allowTraversal = (() => {
-    let visited = {};
-    return ({ nextVertex }) => {
 
+  const visited = {};
+  
+  const allowTraversal = ({ nextVertex }) => {
     if (!visited.hasOwnProperty(nextVertex.getKey())) {
       let nKey = nextVertex.getKey();
       visited[nKey] = true;
       return true;
     }
     return false;
-    }
-  })()
-
-  const enterVertex = () => {};
+  }
+  
+  const enterVertex = ({ currentVertex }) => {
+    visited[currentVertex.getKey()] = true;
+  };
 
   const leaveVertex = () => {};
-
+  
   const bfsCallbacks = {};
   bfsCallbacks.enterVertex = callbacks.enterVertex || enterVertex;
   bfsCallbacks.allowTraversal = callbacks.allowTraversal || allowTraversal;

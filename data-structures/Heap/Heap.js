@@ -10,7 +10,7 @@ export default class Heap {
    * @param {*} array 
    * @param {Function} comparatorFunction
    */
-  constructor(array, comparatorFunction) {
+  constructor(array = [], comparatorFunction) {
     if (new.target === Heap) {
       throw new TypeError('Cannot construct Heap instance directly');
     }

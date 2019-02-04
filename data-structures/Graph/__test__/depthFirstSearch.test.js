@@ -83,4 +83,26 @@ describe('Depth First Search', () => {
     expect(discoveryTime).toEqual({ A: 1, B: 2, C: 3, D: 4, E: 8, F: 9 });
     expect(finishTime).toEqual({ D: 5, C: 6, B: 7, F: 10, E: 11, A: 12 })  
   })
+
+  it('graph should do standard dfs traversal', () => {
+    const vertexA = new GraphVertex('A');
+    const vertexB = new GraphVertex('B');
+
+
+    const edgeAB = new GraphEdge(vertexA, vertexB);
+    const edgeBA = new GraphEdge(vertexB, vertexA);
+
+
+    const graph = new Graph(true);
+    graph
+      .addEdge(edgeAB)
+      .addEdge(edgeBA)
+
+
+    let { traversal, discoveryTime ,finishTime } = graph.dfsTraversal(vertexA)
+
+    expect(traversal).toEqual(['A', 'B'])
+    expect(discoveryTime).toEqual({ A: 1, B: 2 });
+    expect(finishTime).toEqual({ B: 3, A: 4 })  
+  })
 })

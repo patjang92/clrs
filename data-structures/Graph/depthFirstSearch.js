@@ -17,24 +17,26 @@
 function initCallbacks(callbacks = {}) {
   const initiatedCallback = callbacks;
 
-  const stubCallback = () => {};
-
-  const allowTraversalCallback = (
-    () => {
-      const seen = {};
-      return ({ nextVertex }) => {
-        if (!seen[nextVertex.getKey()]) {
-          seen[nextVertex.getKey()] = true;
-          return true;
-        }
-        return false;
-      };
+  const visited = {};
+  
+  const allowTraversal = ({ nextVertex }) => {
+    if (!visited.hasOwnProperty(nextVertex.getKey())) {
+      let nKey = nextVertex.getKey();
+      visited[nKey] = true;
+      return true;
     }
-  )();
+    return false;
+  }
+  
+  const enterVertex = ({ currentVertex }) => {
+    visited[currentVertex.getKey()] = true;
+  };
 
-  initiatedCallback.allowTraversal = callbacks.allowTraversal || allowTraversalCallback;
-  initiatedCallback.enterVertex = callbacks.enterVertex || stubCallback;
-  initiatedCallback.leaveVertex = callbacks.leaveVertex || stubCallback;
+  const leaveVertex = () => {};
+
+  initiatedCallback.allowTraversal = callbacks.allowTraversal || allowTraversal;
+  initiatedCallback.enterVertex = callbacks.enterVertex || enterVertex;
+  initiatedCallback.leaveVertex = callbacks.leaveVertex || leaveVertex;
 
   return initiatedCallback;
 }

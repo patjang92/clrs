@@ -212,6 +212,8 @@ export default class Graph {
     parent[start.getKey()] = null;
     
     const enterVertex = ({ currentVertex }) => {
+      let key = currentVertex.getKey();
+      visited[key] = true;
       traversal.push(currentVertex);
     }
   
@@ -231,17 +233,23 @@ export default class Graph {
   }
 
   dfsTraversal(startVertex) {
-    let traversal = [];
     let time = 0;
-    let discoveryTime = {};
-    let finishTime = {};
-    let parent = {};
-    
+    const traversal = [];
+    const discoveryTime = {};
+    const finishTime = {};
+    const parent = {};
+    const visited = {};
+
     const enterVertex = ({ currentVertex, previousVertex }) => { 
+      visited[currentVertex.getKey()] = true;
       time++;
       traversal.push(currentVertex.value) 
       discoveryTime[currentVertex.getKey()] = time;
       parent[currentVertex.getKey()] = previousVertex;
+    }
+
+    const allowTraversal = ({ nextVertex }) => {
+      return !visited.hasOwnProperty(nextVertex.getKey())
     }
 
     const leaveVertex = ({currentVertex}) => {
@@ -249,7 +257,7 @@ export default class Graph {
       finishTime[currentVertex.getKey()] = time;
     }
 
-    depthFirstSearch(this, startVertex, { enterVertex, leaveVertex });
+    depthFirstSearch(this, startVertex, { enterVertex, allowTraversal, leaveVertex });
 
     return { traversal, discoveryTime, finishTime, parent }
   }

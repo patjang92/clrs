@@ -89,5 +89,23 @@ describe('Breadth First Search', () => {
     expect(parent[vertexB.getKey()]).toEqual(vertexA);
   })
 
+  it('graph should do standard bfs traversal', () => {
+    const vertexA = new GraphVertex('A');
+    const vertexB = new GraphVertex('B');
+
+    const edgeAB = new GraphEdge(vertexA, vertexB);
+    const edgeBA = new GraphEdge(vertexB, vertexA);
+
+    const graph = new Graph(true);
+    graph
+      .addEdge(edgeAB)
+      .addEdge(edgeBA)
+
+    let { traversal, distance, parent } = graph.bfsTraversal(vertexA);
+
+    expect(traversal.map(v => v.value)).toEqual([ 'A', 'B' ]);
+    expect(distance).toEqual({ A: 0, B: 1 });
+    expect(parent[vertexB.getKey()]).toEqual(vertexA);
+  })
 
 })
