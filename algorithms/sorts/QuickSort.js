@@ -1,6 +1,6 @@
 import Sort from './Sort';
 
-export default class QuickSortInPlace extends Sort {
+export default class QuickSort extends Sort {
   /** Sorting in place avoids unnecessary use of additional memory, but modifies input array.
    *
    * This process is difficult to describe, but much clearer with a visualization:
