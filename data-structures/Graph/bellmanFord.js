@@ -19,35 +19,30 @@ export default function bellmanFord(graph, startVertex) {
 
   // We need (|V| - 1) iterations.
   for (let iteration = 0; iteration < (graph.getAllVertices().length - 1); iteration += 1) {
-    // During each iteration go through all vertices.
-    Object.keys(distances).forEach((vertexKey) => {
-      const vertex = graph.getVertexByKey(vertexKey);
+    // During each iteration go through all edges.
+    graph.getAllEdges().forEach(({ startVertex, endVertex, weight }) => {
+      let startKey = startVertex.getKey();
+      let endKey = endVertex.getKey();
 
-      // Go through all vertex edges.
-      graph.getNeighbors(vertex).forEach((neighbor) => {
-        const edge = graph.findEdge(vertex, neighbor);
-        // Find out if the distance to the neighbor is shorter in this iteration
-        // then in previous one.
-        const distanceToVertex = distances[vertex.getKey()];
-        const distanceToNeighbor = distanceToVertex + edge.weight;
-        if (distanceToNeighbor < distances[neighbor.getKey()]) {
-          distances[neighbor.getKey()] = distanceToNeighbor;
-          previousVertices[neighbor.getKey()] = vertex;
-        }
-      });
-    });
+      // Find out if the distance to the neighbor is shorter in this iteration
+      // then in previous one.
+      if (distances[endKey] > distances[startKey] + weight) {
+        distances[endKey] = distances[startKey] + weight;
+        previousVertices[endKey] = startVertex;
+      }
+    })
   }
 
-  let negativeCycleDetected = false;
+  let negativeWeightCycleExists = false;
   graph.getAllEdges().forEach(({ startVertex, endVertex, weight }) => {
     if (distances[startVertex.getKey()] > distances[endVertex.getKey()] + weight) {
-      negativeCycleDetected = true;
+      negativeWeightCycleExists = true;
     }
   })
 
   return {
     distances,
     previousVertices,
-    negativeCycleDetected
+    negativeWeightCycleExists
   };
 }
